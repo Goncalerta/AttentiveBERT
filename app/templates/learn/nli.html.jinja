@@ -1,0 +1,145 @@
+{% extends "layout/base.html.jinja" %}
+{% block body %}
+    <div class="container-xl my-md-4">
+    <main class="article-main">
+      <div class="article-intro ps-lg-4">
+        <h1 class="article-title" id="content">Natural Language Inference</h1>
+        <p class="article-lead">Natural Language Inference (NLI), also known as Recognizing Textual Entailment (RTE), is the task of determining the inference relation between a text and an hypothesis: entailment, contradiction, or neutral <a href="https://aclanthology.org/C08-1066/">[MacCartney and Manning, 2008]</a>.</p>
+      </div>
+        <div class="article-toc mt-4 mb-5 my-md-0 ps-xl-3 mb-lg-5 text-muted">
+          <strong class="d-block h6 my-2 pb-2 border-bottom">Page contents</strong>
+          <nav class="table-of-contents">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#task">Task</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#datasets">Datasets</a>
+                    <ul class="nav flex-column sub-section">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#snli-corpus">SNLI Corpus</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#mnli-corpus">MNLI Corpus</a>
+                        </li>
+                      </ul>
+                </li>
+                </ul>
+            </nav>
+        </div>
+      
+
+      <div class="article-content ps-lg-4">
+        <h2 class="mt-5">Task</h2>
+        <p>
+            NLI is a classification task that receives two sentences as input and tries to determine the relationship between those sentences.
+            This relationship can be entailment, contradiction, or neutral.
+        </p>
+        <p>
+            Since it is a classification task, the model uses the output corresponding to the <em>[CLS]</em> to make the prediction. The prediction is done
+            with a Feed Forward neural network and a <a href="https://machinelearningmastery.com/softmax-activation-function-with-python/">softmax layer</a>,
+            giving the confidence of each possible classification label.
+        </p>
+        <figure>
+          <img class="guide-image img-nli" src="{{url_for('static', filename='img/natural_language_inference.png')}}">
+          <figcaption>Figure 1. Natural Language Inference. The softmax layer actually gives the confidence in each possible answer. The predicted answer can be
+          picked as the one with the most confidence.</figcaption>
+        </figure>
+
+        <h2 class="mt-5">Datasets</h2>
+        <p>
+            This section describes two well known datasets for NLI: the SNLI corpus and the MNLI corpus.
+        </p>
+
+        <h3 class="mt-4">SNLI Corpus</h3>
+        <p>
+            The <a href="https://nlp.stanford.edu/projects/snli">Stanford Natural Language Inference (SNLI) corpus</a> is a collection of 570k 
+            human-written English sentence pairs for the NLI task. This dataset was introduced in 
+            <a href="https://nlp.stanford.edu/pubs/snli_paper.pdf"><em>A large annotated corpus for learning natural language inference</em></a>.
+        </p>
+        
+        <figure>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Text</th>
+                <th scope="col">Hypothesis</th>
+                <th scope="col">Label</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td scope="col">A man inspects the uniform of a figure in some East Asian country</td>
+                    <td scope="col">The man is sleeping</td>
+                    <td scope="col">Contradiction</td>
+                </tr>
+                <tr>
+                    <td scope="col">An older and younger man smiling.</td>
+                    <td scope="col">Two men are smiling and laughing at the cats playing on the floor.</td>
+                    <td scope="col">Neutral</td>
+                </tr>
+                <tr>
+                    <td scope="col">A black race car starts up in front of a crowd of people.</td>
+                    <td scope="col">A man is driving down a lonely road.</td>
+                    <td scope="col">Contradiction</td>
+                </tr>
+                <tr>
+                    <td scope="col">A soccer game with multiple males playing.</td>
+                    <td scope="col">Some men are playing a sport.</td>
+                    <td scope="col">Entailment</td>
+                </tr>
+                <tr>
+                    <td scope="col">A smiling costumed woman is holding an umbrella.</td>
+                    <td scope="col">A happy woman in a fairy costume holds an umbrella.</td>
+                    <td scope="col">Neutral</td>
+                </tr>
+            </tbody>
+          </table>
+          <figcaption>Figure 2. Some SNLI Corpus entries.</figcaption>
+        </figure>
+        
+        <h3 class="mt-4">MNLI Corpus</h3>
+        <p>
+            The <a href="https://cims.nyu.edu/~sbowman/multinli/">Multi-Genre Natural Language Inference (MultiNLI) corpus</a>
+            is a crowd-sourced collection of 433k sentence pairs for NLI. It is modeled on the SNLI corpus, but covers multiple genres 
+            of spoken and written text. This dataset was introduced in 
+            <a href="https://cims.nyu.edu/~sbowman/multinli/paper.pdf"><em>A Broad-Coverage Challenge Corpus for Sentence Understanding through Inference</em></a>.
+        </p>
+        <figure>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Text</th>
+                <th scope="col">Hypothesis</th>
+                <th scope="col">Label</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td scope="col">The Old One always comforted Ca'daan, except today.</td>
+                    <td scope="col">Ca'daan knew the Old One very well.</td>
+                    <td scope="col">Neutral</td>
+                </tr>
+                <tr>
+                    <td scope="col">Your gift is appreciated by each and every student who will benefit from your generosity.</td>
+                    <td scope="col">Hundreds of students will benefit from your generosity.</td>
+                    <td scope="col">Neutral</td>
+                </tr>
+                <tr>
+                    <td scope="col">yes now you know if if everybody like in August when everybody's on vacation or something we can dress a little more casual or</td>
+                    <td scope="col">August is a black out month for vacations in the company.</td>
+                    <td scope="col">Contradiction</td>
+                </tr>
+                <tr>
+                    <td scope="col">At the other end of Pennsylvania Avenue, people began to line up for a White House tour.</td>
+                    <td scope="col">People formed a line at the end of Pennsylvania Avenue.</td>
+                    <td scope="col">Entailment</td>
+                </tr>
+            </tbody>
+          </table>
+          <figcaption>Figure 3. Some MNLI Corpus entries.</figcaption>
+        </figure>
+      </div>
+    </main>
+  </div>
+{% endblock %}

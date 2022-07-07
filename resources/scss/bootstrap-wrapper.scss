@@ -1,0 +1,108 @@
+// $primary: $blue;
+// $secondary: $gray-600;
+// $success: $green;
+// $info: $cyan;
+// $warning: $yellow;
+// $danger: $red;
+$light: rgb(221 236 243);
+// $dark: $gray-900;
+
+$navbar-light-brand-color: #233547;
+$navbar-light-brand-hover-color: #101922;
+
+@import '../lib/bootstrap/scss/bootstrap.scss';
+@import url('../../node_modules/bootstrap-icons/font/bootstrap-icons.css');
+
+.navbar-leftmost {
+    display: flex;
+    align-items: center;
+
+    .navbar-toggler {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.95rem;
+        line-height: 1;
+        border: none;
+        border-color: transparent;
+        margin-top: 0.2em;
+
+        &:hover,
+        &:focus {
+            box-shadow: 0 0 2px 0.05rem;
+        }
+    }
+
+    .navbar-brand {
+        margin-left: 0.5em;
+
+        img {
+            height: 1.25em;
+            margin-bottom: 0.1em;
+        }
+    }
+}
+
+.navbar {
+    box-shadow: 0 0 4px;
+}
+
+.table-of-contents .nav-link {
+    padding-top: 0;
+    padding-bottom: 0.1em;
+}
+
+.nav.sub-section {
+    padding-left: 1em;
+}
+
+@media (min-width: 768px) {
+    .navbar-dropdown-animation {
+        animation-duration: 0.3s;
+        animation-fill-mode: both;
+        animation-name: slideIn;
+    }
+}
+
+@media (max-width: 767px) {
+    .dropdown .dropdown-menu {
+        transition: max-height 0.3s cubic-bezier(0.42, 0, 0.55, 0.99),
+            padding 0.3s cubic-bezier(0.48, 0.01, 0.49, 0.99),
+            border-width 0.3s cubic-bezier(1, 0.01, 1, 0.07);
+        display: block;
+        overflow: hidden;
+    }
+
+    .dropdown-menu.show {
+        max-height: 300px;
+    }
+
+    .dropdown-menu:not(.show) {
+        max-height: 0;
+        padding: 0;
+        margin: 0;
+        border-width: 0;
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateY(-1rem);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0rem);
+        opacity: 1;
+    }
+}
+
+.input-loose-group {
+    display: flex;
+
+    .help-tooltip {
+        font-size: 1.3em;
+        margin-left: 0.3em !important;
+        margin-right: 0.2em;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+}

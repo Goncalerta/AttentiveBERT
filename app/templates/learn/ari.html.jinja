@@ -1,0 +1,116 @@
+{% extends "layout/base.html.jinja" %}
+{% block body %}
+    <div class="container-xl my-md-4">
+    <main class="article-main">
+      <div class="article-intro ps-lg-4">
+        <h1 class="article-title" id="content">Argumentative Relation Identification</h1>
+        <p class="article-lead">Argumentative Relation Identification (ARI) is a subtask of Argument Mining (AM) and aims at classifying if a given source Argumentative Discourse Unit (ADU) supports, attacks, or is unrelated to a second ADU <a href="https://aclanthology.org/D15-1110/">[Peldszus and Stede, 2015]</a>.</p>
+      </div>
+        <div class="article-toc mt-4 mb-5 my-md-0 ps-xl-3 mb-lg-5 text-muted">
+          <strong class="d-block h6 my-2 pb-2 border-bottom">Page contents</strong>
+          <nav class="table-of-contents">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#task">Task</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#datasets">Datasets</a>
+                    <ul class="nav flex-column sub-section">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#argumentative-essays-corpus-english-dataset">Argumentative Essays Corpus (english dataset)</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#argmine-corpus-portuguese-dataset">ArgMine Corpus (portuguese dataset)</a>
+                        </li>
+                      </ul>
+                </li>
+                </ul>
+            </nav>
+        </div>
+      
+
+      <div class="article-content ps-lg-4">
+        <h2 class="mt-5">Task</h2>
+        <p>
+            ARI is a classification task that is a subtask of the Argument Mining task. Argument mining is research area with the goal of
+            automatically extract and identify argumentative structures. The ARI subtask consists of determining, for two sentences
+            with argumentative content (also known as Argumentative Discourse Units), whether the first attacks, supports, or is unrelated 
+            to the second. The first sentence is known as Source ADU and the second as Target ADU.
+        </p>
+        <p>
+            Since it is a classification task, the model uses the output corresponding to the <em>[CLS]</em> to make the prediction. The prediction is done
+            with a Feed Forward neural network and a <a href="https://machinelearningmastery.com/softmax-activation-function-with-python/">softmax layer</a>,
+            giving the confidence of each possible classification label.
+        </p>
+        <figure>
+          <img class="guide-image img-ari" src="{{url_for('static', filename='img/argumentative_relation_identification.png')}}">
+          <figcaption>Figure 1. Argumentative Relation Identification. The softmax layer actually gives the confidence in each possible answer. The predicted answer can be
+          picked as the one with the most confidence.</figcaption>
+        </figure>
+
+        <h2 class="mt-5">Datasets</h2>
+
+        <h3 class="mt-4">Argumentative Essays Corpus (english dataset)</h3>
+        <p>
+            The <a href="https://aclanthology.org/J17-3005/">Argumentative Essays Corpus (AE)</a> was introduced in 
+            <a href="https://aclanthology.org/J17-3005/"><em>Parsing Argumentation Structures in Persuasive Essays</em></a>.
+        </p>
+        
+        <figure>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Source ADU</th>
+                <th scope="col">Target ADU</th>
+                <th scope="col">Label</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td scope="col">Teachers are not just teachers, they are also friends and conseilieurs</td>
+                    <td scope="col">In conclusion, there can be no school without a teacher</td>
+                    <td scope="col">Support</td>
+                </tr>
+                <tr>
+                    <td scope="col">computers need to be operated by people</td>
+                    <td scope="col">no one can argue that technological tools are must-haves for the classroom</td>
+                    <td scope="col">None</td>
+                </tr>
+            </tbody>
+          </table>
+          <figcaption>Figure 2. Some AE Corpus entries.</figcaption>
+        </figure>
+        
+        <h3 class="mt-4">ArgMine Corpus (portuguese dataset)</h3>
+        <p>
+            The <a href="https://web.fe.up.pt/~argmine/">ArgMine corpus</a> is a portuguese dataset for ARI that envisions to automatically 
+            extract the argumentative reasoning included in textual documents, such as opinion articles.
+        </p>
+        <figure>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Source ADU</th>
+                <th scope="col">Target ADU</th>
+                <th scope="col">Label</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td scope="col">Durante a última década, a saúde, o meio ambiente, a biodiversidade, assim como a evolução humana tem sido temas recorrentes em todos os meios de comunicação.</td>
+                    <td scope="col">O século XXI é sem sombra de dúvida a era da Biologia.</td>
+                    <td scope="col">Support</td>
+                </tr>
+                <tr>
+                    <td scope="col">Seria da mais elementar prudência não voltar a precisar de lhe pedir dinheiro</td>
+                    <td scope="col">O fluxo de migrantes agravou o peso do euroceptismo nos governos</td>
+                    <td scope="col">None</td>
+                </tr>
+            </tbody>
+          </table>
+          <figcaption>Figure 3. Some ArgMine Corpus entries.</figcaption>
+        </figure>
+      </div>
+    </main>
+  </div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "layout/base.html.jinja" %}
+{% block body %}
+    <div class="container-xl my-md-4">
+    <main class="mx-5">
+      <div class="article-intro ps-lg-4">
+        <h1 class="article-title" id="content">About</h1>
+        <p class="article-lead">AttentiveBERT is designed to make the visualization of attention weights of BERT-based models more intuitive and convenient, particularly for the case of adversarial attacks.</p>
+      </div>
+      <div class="article-content ps-lg-4 mt-3">
+        <p>
+            This website was developed by Pedro Gonçalo Correia for the curricular unit <em>Capstone Project</em> at 
+            <a href="https://fe.up.pt/">Faculdade de Engenharia da Universidade do Porto</a>, as well as the 
+            <a href="https://gulbenkian.pt/">Gulbenkian Foundation</a>'s <em>New Talents in Artificial Inteligence</em> program.
+        </p>
+        <p>
+            The website's main goal is to facilitate the visualization of attention weights in BERT-based models, allowing the user
+            to input one pair of sentences (or two pairs, and then compare them), see the model predictions, and inspect the attention
+            weights of each head and layer, as well as the mean value of the attention weights in all heads for a single layer or vice-versa and
+            the mean value of the attention weights in all layers and all heads. The website is designed to work with the NLP classification
+            tasks of Natural Language Inference, Argumentative Relation Identification, and Fact Verification. 
+        </p>
+        <p>
+            It is also possible to generate adversarial attacks using one of many methods in the literature, such as <a href="https://arxiv.org/abs/1907.11932">TextFooler</a> or <a href="https://arxiv.org/abs/2004.09984">BERT-Attack</a>.
+            Since generating adversarial attacks takes a long time, and in many cases no successful attack is found for an input pair of sentences,
+            a list of pregenerated attacks is also provided. The input before and after the adversarial attack may be compared with the visualization
+            of attention weights.
+        </p>
+        <p>
+            This website also has a didatic component, with an explanation of the main concepts related to the research problem's theme (<em>Explaining
+            Shortcut Learning Through Attention Models</em>) that are also relevant to the website, as well as tooltips and guides in the visualization 
+            pages to help the user understand how to use the website and the concepts they are interacting with.
+        </p>
+      </div>
+    </main>
+  </div>
+{% endblock %}

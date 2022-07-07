@@ -1,0 +1,914 @@
+{
+    "source": "boychaboy/SNLI_distilbert-base-cased",
+    "model_name": "DistilBERT",
+    "cased": false,
+    "task": "nli",
+    "training_dataset": "SNLI",
+    "description": "DistilBERT model with cased tokenizer finetuned on the NLI task with the SNLI dataset. This model is available on HugginFace as 'boychaboy/SNLI_distilbert-base-cased'.",
+
+    "adversarial_attacks": [
+        {
+            "attack": "BAE",
+            "original": {
+                "sentence_1": "A person wearing a straw hat, standing outside working a steel apparatus with a pile of coconuts on the ground.",
+                "sentence_2": "A person is selling coconuts.",
+                "prediction": {
+                    "contradiction": 0.10406926274299622,
+                    "entailment": 0.0314970538020134,
+                    "neutral": 0.8644337058067322
+                }
+            },
+            "attacked": {
+                "sentence_1": "A person wearing a straw hat, standing outside working a steel apparatus with a pile of coconuts on the ground.",
+                "sentence_2": "A person is gathering coconuts.",
+                "prediction": {
+                    "contradiction": 0.07223833352327347,
+                    "entailment": 0.7503246665000916,
+                    "neutral": 0.17743708193302155
+                }
+            }
+        },
+        {
+            "attack": "BAE",
+            "original": {
+                "sentence_1": "A person wearing a straw hat, standing outside working a steel apparatus with a pile of coconuts on the ground.",
+                "sentence_2": "A person is burning a straw hat.",
+                "prediction": {
+                    "contradiction": 0.6041421294212341,
+                    "entailment": 0.08592037856578827,
+                    "neutral": 0.309937447309494
+                }
+            },
+            "attacked": {
+                "sentence_1": "A man wearing a straw hat, standing outside working a steel apparatus with a pile of coconuts on the ground.",
+                "sentence_2": "said person is burning a straw hat.",
+                "prediction": {
+                    "contradiction": 0.37405288219451904,
+                    "entailment": 0.05844349414110184,
+                    "neutral": 0.5675036311149597
+                }
+            }
+        },
+        {
+            "attack": "BAE",
+            "original": {
+                "sentence_1": "Male in a blue jacket decides to lay in the grass.",
+                "sentence_2": "The guy wearing a blue jacket is laying on the green grass taking a nap.",
+                "prediction": {
+                    "contradiction": 0.01190672442317009,
+                    "entailment": 0.012287355959415436,
+                    "neutral": 0.9758058786392212
+                }
+            },
+            "attacked": {
+                "sentence_1": "Male in a blue jacket decides to be in the grass.",
+                "sentence_2": "The guy wearing a blue jacket is laying on the green grass taking a nap.",
+                "prediction": {
+                    "contradiction": 0.871650755405426,
+                    "entailment": 0.0014281673356890678,
+                    "neutral": 0.1269211620092392
+                }
+            }
+        },
+        {
+            "attack": "BAE",
+            "original": {
+                "sentence_1": "A little boy in a gray and white striped sweater and tan pants is playing on a piece of playground equipment.",
+                "sentence_2": "A boy is on a playground.",
+                "prediction": {
+                    "contradiction": 0.0010707394685596228,
+                    "entailment": 0.977483868598938,
+                    "neutral": 0.02144535817205906
+                }
+            },
+            "attacked": {
+                "sentence_1": "A little boy in a gray and white striped sweater and tan pants is playing on a piece of play equipment.",
+                "sentence_2": "A boy is on a playground.",
+                "prediction": {
+                    "contradiction": 0.006730705965310335,
+                    "entailment": 0.2559833228588104,
+                    "neutral": 0.7372859716415405
+                }
+            }
+        },
+        {
+            "attack": "BAE",
+            "original": {
+                "sentence_1": "A child wearing a red top is standing behind a blond headed child sitting in a wheelbarrow.",
+                "sentence_2": "A child wearing a red top is standing behind a blond headed child",
+                "prediction": {
+                    "contradiction": 0.01732092909514904,
+                    "entailment": 0.9515756964683533,
+                    "neutral": 0.03110332600772381
+                }
+            },
+            "attacked": {
+                "sentence_1": "A child wearing a reddish top is standing behind a blond headed child sitting in a wheelbarrow.",
+                "sentence_2": "A child wearing a red top is standing behind a blond headed child",
+                "prediction": {
+                    "contradiction": 0.5375739932060242,
+                    "entailment": 0.41300874948501587,
+                    "neutral": 0.04941725730895996
+                }
+            }
+        },
+        {
+            "attack": "BAE",
+            "original": {
+                "sentence_1": "Three men, one holding pipes, another holding a large object above his head, and one resting against the pipe bed on the truck, are looking at the camera.",
+                "sentence_2": "three men going to work",
+                "prediction": {
+                    "contradiction": 0.018252603709697723,
+                    "entailment": 0.012130485847592354,
+                    "neutral": 0.9696169495582581
+                }
+            },
+            "attacked": {
+                "sentence_1": "Three boys, one holding pipes, another holding a large object above his head, and one resting against the pipe bed on the truck, are looking at the camera.",
+                "sentence_2": "three men jump to work",
+                "prediction": {
+                    "contradiction": 0.9173902273178101,
+                    "entailment": 0.014696206897497177,
+                    "neutral": 0.06791359186172485
+                }
+            }
+        },
+        {
+            "attack": "BAE",
+            "original": {
+                "sentence_1": "Three girls blow out the candles of a cake made of Peeps.",
+                "sentence_2": "There are three girls and a cake",
+                "prediction": {
+                    "contradiction": 0.0020714940037578344,
+                    "entailment": 0.9733953475952148,
+                    "neutral": 0.024533133953809738
+                }
+            },
+            "attacked": {
+                "sentence_1": "Three girls blow out the candles of a cake made of fire.",
+                "sentence_2": "all are three women and a cake",
+                "prediction": {
+                    "contradiction": 0.04880116879940033,
+                    "entailment": 0.4115246832370758,
+                    "neutral": 0.5396741628646851
+                }
+            }
+        },
+        {
+            "attack": "BAE",
+            "original": {
+                "sentence_1": "A professional swimmer spits water out after surfacing while grabbing the hand of someone helping him back to land.",
+                "sentence_2": "The swimmer is eating a toasted marshmallow.",
+                "prediction": {
+                    "contradiction": 0.9886661767959595,
+                    "entailment": 0.00040376983815804124,
+                    "neutral": 0.010930080898106098
+                }
+            },
+            "attacked": {
+                "sentence_1": "A professional swimmer spits water out after drowning while grabbing the hand of someone helping him back to land.",
+                "sentence_2": "the swimmer is wearing a toasted marshmallow.",
+                "prediction": {
+                    "contradiction": 0.44142946600914,
+                    "entailment": 0.0020991088822484016,
+                    "neutral": 0.5564714074134827
+                }
+            }
+        },
+        {
+            "attack": "BERT-Attack",
+            "original": {
+                "sentence_1": "A land rover is being driven across a river.",
+                "sentence_2": "A vehicle is crossing a river.",
+                "prediction": {
+                    "contradiction": 0.006053019315004349,
+                    "entailment": 0.9718491435050964,
+                    "neutral": 0.022097907960414886
+                }
+            },
+            "attacked": {
+                "sentence_1": "A land rover is being driven across a wet.",
+                "sentence_2": "A vehicle is crossing a river.",
+                "prediction": {
+                    "contradiction": 0.4843997359275818,
+                    "entailment": 0.19181881844997406,
+                    "neutral": 0.32378143072128296
+                }
+            }
+        },
+        {
+            "attack": "BERT-Attack",
+            "original": {
+                "sentence_1": "Three firefighter come out of subway station.",
+                "sentence_2": "Three firefighters playing cards inside a fire station.",
+                "prediction": {
+                    "contradiction": 0.9214210510253906,
+                    "entailment": 0.002647168468683958,
+                    "neutral": 0.07593172043561935
+                }
+            },
+            "attacked": {
+                "sentence_1": "Three firefighter come out of subway station.",
+                "sentence_2": "Three firefighters holding card inside a fire station.",
+                "prediction": {
+                    "contradiction": 0.39864957332611084,
+                    "entailment": 0.1822735220193863,
+                    "neutral": 0.41907691955566406
+                }
+            }
+        },
+        {
+            "attack": "BERT-Attack",
+            "original": {
+                "sentence_1": "A person wearing a straw hat, standing outside working a steel apparatus with a pile of coconuts on the ground.",
+                "sentence_2": "A person is burning a straw hat.",
+                "prediction": {
+                    "contradiction": 0.6041421294212341,
+                    "entailment": 0.08592037856578827,
+                    "neutral": 0.309937447309494
+                }
+            },
+            "attacked": {
+                "sentence_1": "A person wearing a straw hat, standing outside working a steel apparatus with a pile of coconuts on the ground.",
+                "sentence_2": "A person is burned a straw hat.",
+                "prediction": {
+                    "contradiction": 0.4080425500869751,
+                    "entailment": 0.09676911681890488,
+                    "neutral": 0.49518832564353943
+                }
+            }
+        },
+        {
+            "attack": "BERT-Attack",
+            "original": {
+                "sentence_1": "Girl in a red coat, blue head wrap and jeans is making a snow angel.",
+                "sentence_2": "A girl outside plays in the snow.",
+                "prediction": {
+                    "contradiction": 0.00751137500628829,
+                    "entailment": 0.6703661680221558,
+                    "neutral": 0.3221225142478943
+                }
+            },
+            "attacked": {
+                "sentence_1": "Girl in a red coat, blue head wrap and jeans is making a snow angel.",
+                "sentence_2": "A girl outside plays in the frost.",
+                "prediction": {
+                    "contradiction": 0.03814251348376274,
+                    "entailment": 0.25756585597991943,
+                    "neutral": 0.7042916417121887
+                }
+            }
+        },
+        {
+            "attack": "BERT-Attack",
+            "original": {
+                "sentence_1": "A person with blue hair, a baseball cap, and a hood on stands outdoors in a crowd.",
+                "sentence_2": "A person is enjoying a sporting event.",
+                "prediction": {
+                    "contradiction": 0.007133184000849724,
+                    "entailment": 0.1999116837978363,
+                    "neutral": 0.792955219745636
+                }
+            },
+            "attacked": {
+                "sentence_1": "A man with blue clothes, a baseball caps, and a jersey on is outdoors in a crowd.",
+                "sentence_2": "A person is enjoying a sporting event.",
+                "prediction": {
+                    "contradiction": 0.004209945909678936,
+                    "entailment": 0.5019729733467102,
+                    "neutral": 0.4938170909881592
+                }
+            }
+        },
+        {
+            "attack": "BERT-Attack",
+            "original": {
+                "sentence_1": "A girl holding a beverage points at a painting.",
+                "sentence_2": "The girl is drinking an alcoholic beverage.",
+                "prediction": {
+                    "contradiction": 0.01618724688887596,
+                    "entailment": 0.011159761808812618,
+                    "neutral": 0.9726530313491821
+                }
+            },
+            "attacked": {
+                "sentence_1": "A girl holding a cup points at a painting.",
+                "sentence_2": "The girl is drinking an alcoholic beverage.",
+                "prediction": {
+                    "contradiction": 0.8065745830535889,
+                    "entailment": 0.009398366324603558,
+                    "neutral": 0.18402698636054993
+                }
+            }
+        },
+        {
+            "attack": "CheckList",
+            "original": {
+                "sentence_1": "A homeless man carries a sign that says \"hungry\".",
+                "sentence_2": "The man does not have a home.",
+                "prediction": {
+                    "contradiction": 0.2970373332500458,
+                    "entailment": 0.512142539024353,
+                    "neutral": 0.1908201426267624
+                }
+            },
+            "attacked": {
+                "sentence_1": "A homeless man carries a sign that says \"hungry\".",
+                "sentence_2": "The man doesn't have a home.",
+                "prediction": {
+                    "contradiction": 0.42968448996543884,
+                    "entailment": 0.33654847741127014,
+                    "neutral": 0.2337670624256134
+                }
+            }
+        },
+        {
+            "attack": "CheckList",
+            "original": {
+                "sentence_1": "A young man waits on a bench with his bag behind a few advertisements in London.",
+                "sentence_2": "The young man is 60 years old.",
+                "prediction": {
+                    "contradiction": 0.49651622772216797,
+                    "entailment": 0.010160454548895359,
+                    "neutral": 0.49332326650619507
+                }
+            },
+            "attacked": {
+                "sentence_1": "A young man waits on a bench with his bag behind a few advertisements in London.",
+                "sentence_2": "The young man is 50 years old.",
+                "prediction": {
+                    "contradiction": 0.2320505976676941,
+                    "entailment": 0.006002848967909813,
+                    "neutral": 0.7619465589523315
+                }
+            }
+        },
+        {
+            "attack": "Kuleshov2017",
+            "original": {
+                "sentence_1": "A group of kids is splashing in deep water nearby a rock formation.",
+                "sentence_2": "The kids are singing in a choir",
+                "prediction": {
+                    "contradiction": 0.9943549633026123,
+                    "entailment": 0.00032254846883006394,
+                    "neutral": 0.0053224992007017136
+                }
+            },
+            "attacked": {
+                "sentence_1": "A group of kids is splashing in deep water nearby a rock formation.",
+                "sentence_2": "The kids are singing in a glee",
+                "prediction": {
+                    "contradiction": 0.3010375201702118,
+                    "entailment": 0.004433885682374239,
+                    "neutral": 0.6945285797119141
+                }
+            }
+        },
+        {
+            "attack": "Kuleshov2017",
+            "original": {
+                "sentence_1": "3 ladies with numbers on their shirts running.",
+                "sentence_2": "The ladies are riding bikes.",
+                "prediction": {
+                    "contradiction": 0.979941189289093,
+                    "entailment": 0.004948100540786982,
+                    "neutral": 0.015110775828361511
+                }
+            },
+            "attacked": {
+                "sentence_1": "3 ladies with numbers on their shirts running.",
+                "sentence_2": "The ladies are riding biking.",
+                "prediction": {
+                    "contradiction": 0.3163713812828064,
+                    "entailment": 0.14452649652957916,
+                    "neutral": 0.5391021370887756
+                }
+            }
+        },
+        {
+            "attack": "Kuleshov2017",
+            "original": {
+                "sentence_1": "A young man waring black and carrying a skateboard looks at an outdoor skateboard park.",
+                "sentence_2": "A girl with a ponytail is riding a bike at a park.",
+                "prediction": {
+                    "contradiction": 0.9979320764541626,
+                    "entailment": 0.0008104835287667811,
+                    "neutral": 0.0012574599822983146
+                }
+            },
+            "attacked": {
+                "sentence_1": "A young bloke waring black and carrying a skateboard looks at an outdoor skateboard park.",
+                "sentence_2": "A girl with a ponytail is riding a bicycling at a park.",
+                "prediction": {
+                    "contradiction": 0.22872506082057953,
+                    "entailment": 0.054848939180374146,
+                    "neutral": 0.7164260149002075
+                }
+            }
+        },
+        {
+            "attack": "Kuleshov2017",
+            "original": {
+                "sentence_1": "The man in the black t-shirt is trying to throw something.",
+                "sentence_2": "The man is walking away.",
+                "prediction": {
+                    "contradiction": 0.9822673201560974,
+                    "entailment": 0.002532051643356681,
+                    "neutral": 0.015200643800199032
+                }
+            },
+            "attacked": {
+                "sentence_1": "The man in the black t-shirt is trying to throw something.",
+                "sentence_2": "The man is stroll away.",
+                "prediction": {
+                    "contradiction": 0.17378973960876465,
+                    "entailment": 0.7048808932304382,
+                    "neutral": 0.1213293969631195
+                }
+            }
+        },
+        {
+            "attack": "Kuleshov2017",
+            "original": {
+                "sentence_1": "Four boys are about to be hit by an approaching wave.",
+                "sentence_2": "A wave is about hit some boys.",
+                "prediction": {
+                    "contradiction": 0.022290093824267387,
+                    "entailment": 0.782271683216095,
+                    "neutral": 0.19543826580047607
+                }
+            },
+            "attacked": {
+                "sentence_1": "Four blokes are about to be hit by an approaching wave.",
+                "sentence_2": "A wave is about hit some boys.",
+                "prediction": {
+                    "contradiction": 0.054087210446596146,
+                    "entailment": 0.047930099070072174,
+                    "neutral": 0.8979827165603638
+                }
+            }
+        },
+        {
+            "attack": "Kuleshov2017",
+            "original": {
+                "sentence_1": "A young man in a blue T-shirt and sweatpants stands over a stove and looks at the camera while another young man stands behind him.",
+                "sentence_2": "Two men are recording a cooking tutorial.",
+                "prediction": {
+                    "contradiction": 0.05680736154317856,
+                    "entailment": 0.01070499513298273,
+                    "neutral": 0.9324876070022583
+                }
+            },
+            "attacked": {
+                "sentence_1": "A young man in a blue T-shirt and sweatpants stands over a stove and looks at the camera while another young man stands behind him.",
+                "sentence_2": "Two men are taping a cooking tutorial.",
+                "prediction": {
+                    "contradiction": 0.7316638231277466,
+                    "entailment": 0.00715553667396307,
+                    "neutral": 0.261180579662323
+                }
+            }
+        },
+        {
+            "attack": "Kuleshov2017",
+            "original": {
+                "sentence_1": "A crowd is watching a group of men in suits with briefcases walk in formation down the street led by a woman holding a sign.",
+                "sentence_2": "A group of people dressed as clowns stroll into the Bigtop Circus holding signs.",
+                "prediction": {
+                    "contradiction": 0.7194109559059143,
+                    "entailment": 0.013098941184580326,
+                    "neutral": 0.26749008893966675
+                }
+            },
+            "attacked": {
+                "sentence_1": "A crowd is watching a group of men in suits with briefcases walk in formation down the street led by a woman holding a sign.",
+                "sentence_2": "A group of people dressed as clowns tour into the Bigtop Circus holding signs.",
+                "prediction": {
+                    "contradiction": 0.4557047486305237,
+                    "entailment": 0.010179362259805202,
+                    "neutral": 0.5341158509254456
+                }
+            }
+        },
+        {
+            "attack": "Kuleshov2017",
+            "original": {
+                "sentence_1": "A man and woman sitting on the sidewalk.",
+                "sentence_2": "The man and woman are sitting.",
+                "prediction": {
+                    "contradiction": 0.0024536263663321733,
+                    "entailment": 0.9873537421226501,
+                    "neutral": 0.010192597284913063
+                }
+            },
+            "attacked": {
+                "sentence_1": "A man and woman sitting on the sidewalk.",
+                "sentence_2": "The man and woman are meeting.",
+                "prediction": {
+                    "contradiction": 0.006238630972802639,
+                    "entailment": 0.0069685387425124645,
+                    "neutral": 0.986792802810669
+                }
+            }
+        },
+        {
+            "attack": "Kuleshov2017",
+            "original": {
+                "sentence_1": "A lady is helping another woman work in a silver compartment, which is most likely related to nurse-work.",
+                "sentence_2": "A lady is sleeping on a couch",
+                "prediction": {
+                    "contradiction": 0.9990573525428772,
+                    "entailment": 0.00030055997194722295,
+                    "neutral": 0.0006420561112463474
+                }
+            },
+            "attacked": {
+                "sentence_1": "A lady is helping another woman work in a silver compartment, which is most likely related to nurse-work.",
+                "sentence_2": "A lady is layer on a settee",
+                "prediction": {
+                    "contradiction": 0.18885603547096252,
+                    "entailment": 0.48704850673675537,
+                    "neutral": 0.32409539818763733
+                }
+            }
+        },
+        {
+            "attack": "PWWS",
+            "original": {
+                "sentence_1": "A blond little boy in an orange sweatshirt with red sleeves is using scissors to cut something.",
+                "sentence_2": "A blond little boy is sleeping.",
+                "prediction": {
+                    "contradiction": 0.9977582097053528,
+                    "entailment": 0.0006829853518866003,
+                    "neutral": 0.0015588492387905717
+                }
+            },
+            "attacked": {
+                "sentence_1": "A blond little boy in an orange sweatshirt with red sleeves is using scissors to cut something.",
+                "sentence_2": "A blond little boy is quiescence.",
+                "prediction": {
+                    "contradiction": 0.07158813625574112,
+                    "entailment": 0.7978283166885376,
+                    "neutral": 0.13058353960514069
+                }
+            }
+        },
+        {
+            "attack": "PWWS",
+            "original": {
+                "sentence_1": "A person dressed in white and black winter clothing leaps a narrow, water-filled ditch from one frost-covered field to another, where a female dressed in black coat and pants awaits.",
+                "sentence_2": "The man is dressed in summer clothing.",
+                "prediction": {
+                    "contradiction": 0.9397891759872437,
+                    "entailment": 0.034711163491010666,
+                    "neutral": 0.025499626994132996
+                }
+            },
+            "attacked": {
+                "sentence_1": "A person dressed in white and black winter clothing leaps a narrow, water-filled ditch from one frost-covered field to another, where a female dressed in black coat and pants awaits.",
+                "sentence_2": "The man is dressed in summer apparel.",
+                "prediction": {
+                    "contradiction": 0.3363254964351654,
+                    "entailment": 0.479719877243042,
+                    "neutral": 0.1839546412229538
+                }
+            }
+        },
+        {
+            "attack": "PWWS",
+            "original": {
+                "sentence_1": "Elderly woman in blue apron balances a basket on her head on a sidewalk while talking to a woman dressed in black.",
+                "sentence_2": "Elderly woman is balancing something on her head while having a conversation.",
+                "prediction": {
+                    "contradiction": 0.0016916150925680995,
+                    "entailment": 0.9474877119064331,
+                    "neutral": 0.05082063004374504
+                }
+            },
+            "attacked": {
+                "sentence_1": "Elderly woman in blue apron balances a basket on her head on a sidewalk while blab to a woman dressed in black.",
+                "sentence_2": "Elderly woman is balancing something on her head while having a conversation.",
+                "prediction": {
+                    "contradiction": 0.028310483321547508,
+                    "entailment": 0.21659956872463226,
+                    "neutral": 0.7550899386405945
+                }
+            }
+        },
+        {
+            "attack": "PWWS",
+            "original": {
+                "sentence_1": "Two little kids without shirts are sitting down facing each other.",
+                "sentence_2": "Two children are sleeping at daycare",
+                "prediction": {
+                    "contradiction": 0.9519937634468079,
+                    "entailment": 0.0008856956264935434,
+                    "neutral": 0.04712066426873207
+                }
+            },
+            "attacked": {
+                "sentence_1": "Two little kids without shirts are sitting down facing each other.",
+                "sentence_2": "Two children are quiescency at daycare",
+                "prediction": {
+                    "contradiction": 0.07873876392841339,
+                    "entailment": 0.03835056349635124,
+                    "neutral": 0.8829107284545898
+                }
+            }
+        },
+        {
+            "attack": "PWWS",
+            "original": {
+                "sentence_1": "Workers standing on a lift.",
+                "sentence_2": "Workers walk home from work",
+                "prediction": {
+                    "contradiction": 0.7752153873443604,
+                    "entailment": 0.0029223887249827385,
+                    "neutral": 0.22186224162578583
+                }
+            },
+            "attacked": {
+                "sentence_1": "Workers standing on a lift.",
+                "sentence_2": "Workers walkway home from work",
+                "prediction": {
+                    "contradiction": 0.09536737948656082,
+                    "entailment": 0.02797153778374195,
+                    "neutral": 0.8766610026359558
+                }
+            }
+        },
+        {
+            "attack": "PWWS",
+            "original": {
+                "sentence_1": "A child in a ninja outfit does a jumping kick.",
+                "sentence_2": "a child in a black ninja suit does a kick",
+                "prediction": {
+                    "contradiction": 0.007372771855443716,
+                    "entailment": 0.006167337764054537,
+                    "neutral": 0.9864598512649536
+                }
+            },
+            "attacked": {
+                "sentence_1": "A child in a ninja outfit does a jumping kick.",
+                "sentence_2": "a child in a mordant ninja suit does a kick",
+                "prediction": {
+                    "contradiction": 0.0069984449073672295,
+                    "entailment": 0.9361754059791565,
+                    "neutral": 0.05682611092925072
+                }
+            }
+        },
+        {
+            "attack": "PWWS",
+            "original": {
+                "sentence_1": "A man cooking with fire in like 5 pots at the same time!",
+                "sentence_2": "A man is cooking with a bunch of ovens.",
+                "prediction": {
+                    "contradiction": 0.8301259875297546,
+                    "entailment": 0.03513246774673462,
+                    "neutral": 0.13474157452583313
+                }
+            },
+            "attacked": {
+                "sentence_1": "A man cooking with fire in like 5 pots at the same time!",
+                "sentence_2": "A man is cookery with a bunch of ovens.",
+                "prediction": {
+                    "contradiction": 0.3034939169883728,
+                    "entailment": 0.26189905405044556,
+                    "neutral": 0.43460699915885925
+                }
+            }
+        },
+        {
+            "attack": "PWWS",
+            "original": {
+                "sentence_1": "A man with a long white beard is examining a camera and another man with a black shirt is in the background.",
+                "sentence_2": "A man is with a cowboy",
+                "prediction": {
+                    "contradiction": 0.04958248510956764,
+                    "entailment": 0.09260184317827225,
+                    "neutral": 0.857815682888031
+                }
+            },
+            "attacked": {
+                "sentence_1": "A man with a long white beard is examining a camera and another man with a black shirt is in the background.",
+                "sentence_2": "A man is with a puncher",
+                "prediction": {
+                    "contradiction": 0.9256665706634521,
+                    "entailment": 0.02021990902721882,
+                    "neutral": 0.05411343649029732
+                }
+            }
+        },
+        {
+            "attack": "TextFooler",
+            "original": {
+                "sentence_1": "A man stands by two face structures on Easter Island.",
+                "sentence_2": "A child hunts for easter eggs.",
+                "prediction": {
+                    "contradiction": 0.9974989295005798,
+                    "entailment": 0.0003052651882171631,
+                    "neutral": 0.0021957820281386375
+                }
+            },
+            "attacked": {
+                "sentence_1": "A man stands by two face structures on Easter Island.",
+                "sentence_2": "A underage hunters for easter eggs.",
+                "prediction": {
+                    "contradiction": 0.12473474442958832,
+                    "entailment": 0.007001516409218311,
+                    "neutral": 0.8682637810707092
+                }
+            }
+        },
+        {
+            "attack": "TextFooler",
+            "original": {
+                "sentence_1": "A Skier ski-jumping while two other skiers watch his act.",
+                "sentence_2": "A skier down the road skiying",
+                "prediction": {
+                    "contradiction": 0.508348286151886,
+                    "entailment": 0.2181558907032013,
+                    "neutral": 0.27349576354026794
+                }
+            },
+            "attacked": {
+                "sentence_1": "A Skier ski-jumping while two other skiers watch his act.",
+                "sentence_2": "A skier down the roadway skiying",
+                "prediction": {
+                    "contradiction": 0.3174935579299927,
+                    "entailment": 0.38219115138053894,
+                    "neutral": 0.300315260887146
+                }
+            }
+        },
+        {
+            "attack": "TextFooler",
+            "original": {
+                "sentence_1": "A brown and black dog runs on the grass outdoors in front of a sidewalk.",
+                "sentence_2": "A canine is using his legs.",
+                "prediction": {
+                    "contradiction": 0.011266080662608147,
+                    "entailment": 0.942602276802063,
+                    "neutral": 0.04613153636455536
+                }
+            },
+            "attacked": {
+                "sentence_1": "A brown and black dog runs on the grass outdoors in front of a sidewalk.",
+                "sentence_2": "A canine is using his fours.",
+                "prediction": {
+                    "contradiction": 0.5508236289024353,
+                    "entailment": 0.13170398771762848,
+                    "neutral": 0.3174724280834198
+                }
+            }
+        },
+        {
+            "attack": "TextFooler",
+            "original": {
+                "sentence_1": "A man in an overcoat putting on his gloves at a subway station.",
+                "sentence_2": "A person is waiting for the train.",
+                "prediction": {
+                    "contradiction": 0.029902875423431396,
+                    "entailment": 0.2668743133544922,
+                    "neutral": 0.7032228112220764
+                }
+            },
+            "attacked": {
+                "sentence_1": "A man in an overcoat putting on his gloves at a subway station.",
+                "sentence_2": "A person is standby for the train.",
+                "prediction": {
+                    "contradiction": 0.23126155138015747,
+                    "entailment": 0.581382691860199,
+                    "neutral": 0.18735574185848236
+                }
+            }
+        },
+        {
+            "attack": "TextFooler",
+            "original": {
+                "sentence_1": "two dogs fighting over a pink and red toy",
+                "sentence_2": "The dogs are in the backyard.",
+                "prediction": {
+                    "contradiction": 0.02250606007874012,
+                    "entailment": 0.010073922574520111,
+                    "neutral": 0.9674199819564819
+                }
+            },
+            "attacked": {
+                "sentence_1": "two dogs fighting over a pink and red toy",
+                "sentence_2": "The dogs are in the garden.",
+                "prediction": {
+                    "contradiction": 0.7035459280014038,
+                    "entailment": 0.00862409733235836,
+                    "neutral": 0.2878299951553345
+                }
+            }
+        },
+        {
+            "attack": "TextFooler",
+            "original": {
+                "sentence_1": "two dogs fighting over a pink and red toy",
+                "sentence_2": "The dogs are near the toy.",
+                "prediction": {
+                    "contradiction": 0.0062068733386695385,
+                    "entailment": 0.9509127736091614,
+                    "neutral": 0.042880382388830185
+                }
+            },
+            "attacked": {
+                "sentence_1": "two dogs fighting over a pink and red toy",
+                "sentence_2": "The dogs are next the toy.",
+                "prediction": {
+                    "contradiction": 0.056540071964263916,
+                    "entailment": 0.3357999622821808,
+                    "neutral": 0.6076599359512329
+                }
+            }
+        },
+        {
+            "attack": "TextFooler",
+            "original": {
+                "sentence_1": "A person wearing a red shirt is falling off a white surfboard.",
+                "sentence_2": "A person is falling off their bicycle.",
+                "prediction": {
+                    "contradiction": 0.9907802939414978,
+                    "entailment": 0.0045515927486121655,
+                    "neutral": 0.004668043460696936
+                }
+            },
+            "attacked": {
+                "sentence_1": "A person wearing a red shirt is falling off a white surfboard.",
+                "sentence_2": "A person is falling off their biking.",
+                "prediction": {
+                    "contradiction": 0.21754491329193115,
+                    "entailment": 0.608413815498352,
+                    "neutral": 0.17404133081436157
+                }
+            }
+        },
+        {
+            "attack": "TextFooler",
+            "original": {
+                "sentence_1": "A man of the cloth puts a black substance on a man's forehead.",
+                "sentence_2": "The man puts something on the other mans head.",
+                "prediction": {
+                    "contradiction": 0.10944094508886337,
+                    "entailment": 0.7943376898765564,
+                    "neutral": 0.09622133523225784
+                }
+            },
+            "attacked": {
+                "sentence_1": "A man of the cloth puts a black substance on a man's forehead.",
+                "sentence_2": "The fella puts something on the other mans head.",
+                "prediction": {
+                    "contradiction": 0.498144268989563,
+                    "entailment": 0.14094533026218414,
+                    "neutral": 0.3609103560447693
+                }
+            }
+        },
+        {
+            "attack": "TextFooler",
+            "original": {
+                "sentence_1": "A man of the cloth puts a black substance on a man's forehead.",
+                "sentence_2": "The women are at the park.",
+                "prediction": {
+                    "contradiction": 0.9953182339668274,
+                    "entailment": 0.000538125226739794,
+                    "neutral": 0.00414364505559206
+                }
+            },
+            "attacked": {
+                "sentence_1": "A man of the cloth puts a black substance on a man's forehead.",
+                "sentence_2": "The femme are at the park.",
+                "prediction": {
+                    "contradiction": 0.2786501348018646,
+                    "entailment": 0.006864817347377539,
+                    "neutral": 0.7144850492477417
+                }
+            }
+        },
+        {
+            "attack": "TextFooler",
+            "original": {
+                "sentence_1": "a group of people dancing together.",
+                "sentence_2": "They are doing the tango.",
+                "prediction": {
+                    "contradiction": 0.05184638872742653,
+                    "entailment": 0.01055948343127966,
+                    "neutral": 0.9375941753387451
+                }
+            },
+            "attacked": {
+                "sentence_1": "a group of people dancing together.",
+                "sentence_2": "They are doing the merengue.",
+                "prediction": {
+                    "contradiction": 0.5338976383209229,
+                    "entailment": 0.06473890691995621,
+                    "neutral": 0.40136340260505676
+                }
+            }
+        }
+    ]
+}

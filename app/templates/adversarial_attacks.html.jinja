@@ -1,0 +1,109 @@
+{% extends "layout/base.html.jinja" %}
+{% block body %}
+    <div class="container my-4">
+    <main>
+      <div class="article-intro ps-lg-4 mb-5">
+        <h1 class="article-title" id="content">Adversarial attacks</h1>
+        <p class="article-lead">Automatically generate changes to the input pair of sentences so as to change the model prediction.</p>
+        <p>You may change the adversarial attack method being used. The attention visualization comparison is also shown, as in <a href="{{ url_for('visualize_compare_attention') }}">Compare attention weights</a>.</p>
+        <div class="alert alert-warning mx-5" role="alert">
+          <b><i class="bi bi-exclamation-triangle"></i> Warning:</b> Adversarial attack methods are computationally expensive and so it might take a while to produce a result. It is also sometimes possible for the methods to fail to maintain the meaning of the sentence (and so the result is not a true adversarial attack).
+        </div>
+      </div>
+      <div class="article-content px-lg-4">
+            <form class="visualize-form visualize-compare-form container px-m-5">
+              <div class="task-selection mb-2">
+                <label for="task" class="form-label ">Task:</label>
+                <div class="input-loose-group mb-3">
+                  <select name="task" class="form-select" aria-label="Select task">
+                    <option {% if seltask == "nli" %}selected{% endif %} value="nli" {% if nli_options|length == 0 %}disabled{% endif %}>NLI</option>
+                    <option {% if seltask == "ari" %}selected{% endif %} value="ari" {% if ari_options|length == 0 %}disabled{% endif %}>ARI</option>
+                    <option {% if seltask == "fv" %}selected{% endif %} value="fv" {% if fv_options|length == 0 %}disabled{% endif %}>FV</option>
+                  </select>
+                  <i class="bi bi-question-circle help-tooltip help-tooltip-task" data-bs-toggle="tooltip" data-bs-placement="top"></i>
+                </div>
+                <label for="model" class="form-label ">Model:</label>
+                <div class="input-loose-group mb-3">
+                  <select name="model" class="form-select form-select-model form-select-nli" aria-label="Select model" {% if nli_options|length <= 1 %}disabled{% endif %}>
+                    {% for model in nli_options %}
+                      <option {% if loop.index0 == selmodel | int %}selected{% endif %} value="{{ loop.index0 }}" data-abert-description="{{ model.description }}">{{ model.display_name() }}</option>
+                    {% endfor %}
+                  </select>
+                  <select name="model" class="form-select form-select-model form-select-ari d-none" aria-label="Select model" {% if ari_options|length <= 1 %}disabled{% endif %}>
+                    {% for model in ari_options %}
+                      <option {% if loop.index0 == selmodel | int %}selected{% endif %} value="{{ loop.index0 }}" data-abert-description="{{ model.description }}">{{ model.display_name() }}</option>
+                    {% endfor %}
+                  </select>
+                  <select name="model" class="form-select form-select-model form-select-fv d-none" aria-label="Select model" {% if fv_options|length <= 1 %}disabled{% endif %}>
+                    {% for model in fv_options %}
+                      <option {% if loop.index0 == selmodel | int %}selected{% endif %} value="{{ loop.index0 }}" data-abert-description="{{ model.description }}">{{ model.display_name() }}</option>
+                    {% endfor %}
+                  </select>
+                  <i class="bi bi-question-circle help-tooltip help-tooltip-model" data-bs-toggle="tooltip" data-bs-placement="top"></i>
+                </div>
+              </div>
+              <div class="attack-selection mb-2">
+                <label for="attack" class="form-label ">Attack:</label>
+                <div class="input-loose-group mb-3">
+                  <select name="attack" class="form-select form-select-attack" aria-label="Select attack">
+                    {% for attack in available_attacks %}
+                      <option {% if loop.first %}selected{% endif %} value="{{ loop.index0 }}" data-abert-description="{{ attack[2] }}">{{ attack[0] }}</option>
+                    {% endfor %}
+                  </select>
+                  <i class="bi bi-question-circle help-tooltip help-tooltip-attack" data-bs-toggle="tooltip" data-bs-placement="top"></i>
+                </div>
+              </div>
+              <div class="model-runner">
+                <label for="sentence_a1" class="form-label input1">{{label['a']}}:</label>
+                <input
+                    name="sentence_a1"
+                    type="text"
+                    placeholder="Enter text..."
+                    class="form-control input1"/>
+                <label for="sentence_b1" class="form-label input1">{{label['b']}}:</label>
+                <input class="form-control input1" name="sentence_b1" type="text" placeholder="Enter text..."/>
+                <button class="btn btn-primary gen-adv-attack" type="button">Generate</button>
+                <label class="form-label input2 for-sentence2 d-none">Generated attack:</label>
+                <input
+                    disabled
+                    name="sentence_a2"
+                    type="text"
+                    class="form-control input2 d-none"/>
+                <input disabled class="form-control input2 wide d-none" name="sentence_b2" type="text"/>
+              </div>
+            </form>
+      </div>
+      <div class="d-flex justify-content-center d-none" id="loading-spinner">
+        <div class="spinner-border text-primary" role="status"></div>
+      </div>
+      <div class="alert alert-danger mb-5 d-none" id="error-alert" role="alert">
+        No adversarial attack was found for the input sentence.
+      </div>
+      <div class="d-flex">
+        <div id="attention-visualizer" class="mx-auto"></div>
+      </div>
+    <div class="px-3">
+        <h2>Pregenerated attacks</h2>
+          <p>Since generating attacks is not always possible for an arbitrary pair of sentences and it is computationally expensive, below are shown pregenerated attacks for the model/task pair selected above.</p>
+          <div class="d-flex justify-content-center d-none" id="pregen-attacks-loading-spinner"><div class="spinner-border text-primary" role="status"></div></div>
+          <div class="alert alert-warning mx-5 d-none" id="pregen-attacks-warning" role="alert">
+            No pregenerated attacks where found for the selected model/task pair.
+          </div>
+          <table class="table d-none" id="pregen-attacks-table">
+            <thead>
+              <tr>
+                <th scope="col">Sentences</th>
+                <th scope="col"></th>
+                <th scope="col">Attack</th>
+                <th scope="col">Predictions</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody id="pregen-attacks-table-body">
+            </tbody>
+          </table>
+        </div>
+        </div>
+    </main>
+  </div>
+{% endblock %}

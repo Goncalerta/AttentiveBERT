@@ -1,0 +1,72 @@
+{% extends "layout/base.html.jinja" %}
+{% block body %}
+    <div class="container my-4">
+    <main>
+      <div class="article-intro ps-lg-4">
+        <h1 class="article-title" id="content">Visualize attention weights</h1>
+        <p class="article-lead">Input a pair of sentences for one of the available tasks to see the model prediction and visualize the attention weights for each head.</p>
+      </div>
+      <div class="article-content px-lg-4">
+            <form class="visualize-form visualize-single-form container px-m-5">
+                <div class="task-selection mb-2">
+                  <label for="task" class="form-label ">Task:</label>
+                  <div class="input-loose-group mb-3">
+                    <select name="task" class="form-select" aria-label="Select task">
+                      <option {% if seltask == "nli" %}selected{% endif %} value="nli" {% if nli_options|length == 0 %}disabled{% endif %}>NLI</option>
+                      <option {% if seltask == "ari" %}selected{% endif %} value="ari" {% if ari_options|length == 0 %}disabled{% endif %}>ARI</option>
+                      <option {% if seltask == "fv" %}selected{% endif %} value="fv" {% if fv_options|length == 0 %}disabled{% endif %}>FV</option>
+                    </select>
+                    <i class="bi bi-question-circle help-tooltip help-tooltip-task" data-bs-toggle="tooltip" data-bs-placement="top"></i>
+                  </div>
+                  <label for="model" class="form-label ">Model:</label>
+                  <div class="input-loose-group mb-3">
+                    <select name="model" class="form-select form-select-model form-select-nli" aria-label="Select model" {% if nli_options|length <= 1 %}disabled{% endif %}>
+                      {% for model in nli_options %}
+                        <option {% if loop.index0 == selmodel | int %}selected{% endif %} value="{{ loop.index0 }}" data-abert-description="{{ model.description }}">{{ model.display_name() }}</option>
+                      {% endfor %}
+                    </select>
+                    <select name="model" class="form-select form-select-model form-select-ari d-none" aria-label="Select model" {% if ari_options|length <= 1 %}disabled{% endif %}>
+                      {% for model in ari_options %}
+                        <option {% if loop.index0 == selmodel | int %}selected{% endif %} value="{{ loop.index0 }}" data-abert-description="{{ model.description }}">{{ model.display_name() }}</option>
+                      {% endfor %}
+                    </select>
+                    <select name="model" class="form-select form-select-model form-select-fv d-none" aria-label="Select model" {% if fv_options|length <= 1 %}disabled{% endif %}>
+                      {% for model in fv_options %}
+                        <option {% if loop.index0 == selmodel | int %}selected{% endif %} value="{{ loop.index0 }}" data-abert-description="{{ model.description }}">{{ model.display_name() }}</option>
+                      {% endfor %}
+                    </select>
+                    <i class="bi bi-question-circle help-tooltip help-tooltip-model" data-bs-toggle="tooltip" data-bs-placement="top"></i>
+                  </div>
+                </div>
+                <div class="model-runner">
+                  <label for="sentence_a" class="form-label">{{label['a']}}:</label>
+                  <input
+                      name="sentence_a"
+                      type="text"
+                      value="{{ sentence_a1 }}"
+                      placeholder="Enter text..."
+                      class="form-control"/>
+                  <label for="sentence_b" class="form-label">{{label['b']}}:</label>
+                  <input class="form-control" name="sentence_b" type="text" value="{{ sentence_b1 }}" placeholder="Enter text..."/>
+                  <button type="submit" class="btn btn-primary">Run</button>
+                </div>
+            </form>
+      </div>
+      <div class="d-flex justify-content-center d-none" id="loading-spinner">
+        <div class="spinner-border text-primary" role="status"></div>
+      </div>
+      <div class="d-flex">
+        <div id="attention-visualizer" class="mx-auto"></div>
+      </div>
+    </main>
+    <div class="px-3">
+        <h2>About this visualizer</h2>
+          <p>Upon submitting a pair of sentences, the model will output a prediction and show the confidence on each label. It will also output an interactive heatmap of attention weights.</p>
+          <p>Each cell of the heatmap encodes the attention from the token in the y axis to the token in the x axis. The buttons panel allows to select a single head of a single layer. 
+          Clicking on a layer label will show the average weights of all heads in that layer. Clicking on a head label will show the average weights of the heads in that position in every layer.
+          Clicking on the circle on the lower left of the buttons panel will show the average of all heads in every layer.</p>
+        </div>
+        </div>
+    </main>
+  </div>
+{% endblock %}

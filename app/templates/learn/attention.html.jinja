@@ -1,0 +1,146 @@
+{% extends "layout/base.html.jinja" %}
+{% block body %}
+    <div class="container-xl my-md-4">
+    <main class="article-main">
+      <div class="article-intro ps-lg-4">
+        <h1 class="article-title" id="content">Self-attention mechanism</h1>
+        <p class="article-lead">The self-attention mechanism is a core component of each encoder in the Transformers architecture.</p>
+      </div>
+        <div class="article-toc mt-4 mb-5 my-md-0 ps-xl-3 mb-lg-5 text-muted">
+          <strong class="d-block h6 my-2 pb-2 border-bottom">Page contents</strong>
+          <nav class="table-of-contents">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#intuition">Intuition</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#detailed-explanation">Detailed explanation</a>
+                    <ul class="nav flex-column sub-section">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#query-key-and-value">Query, key and value</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#calculating-self-attention">Calculating self-attention</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#multi-head-attention">Multi-head attention</a>
+                        </li>
+                      </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#attention-weights-and-visualization">Attention weights and visualization</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#matrix-calculation">Matrix calculation</a>
+                </li>
+                </ul>
+            </nav>
+        </div>
+      
+
+      <div class="article-content ps-lg-4">
+        <h2 class="mt-5">Intuition</h2>
+        <p>
+            In natural language it is common to have a sentence where a word refers to a previous word in the sentence (for example, a pronoun or a
+            determiner). For example, in "BERT is a great model for NLI because it achieved state-of-the-art performance in the task.", humans would
+            quickly associate "it" and "model" with "BERT" (and not "NLI"), and "task" with "NLI".
+        </p>
+        <p>
+            The self-attention mechanism is an attempt at capturing those kind of semantic associations in a given sentence. In fact, each <a href="{{ url_for('learn_bert') }}#the-encoder">encoder</a>
+            has a self-attention step. In this step, for each token, the model looks at the other tokens in search for context that may improve the encoding of the given token.
+            In a very high-level, simplistic and intuitive way, it can be said that the model pays more attention to certain tokens than others, based on their encodings
+            and what it learned during pre-training. The encoding of the token being processed then becomes a weighted sum of the encodings of all the tokens in the input (including itself), based on the attention payed to them.
+        </p>
+        <figure>
+          <img class="guide-image self-attention-intuition" src="https://1.bp.blogspot.com/-AVGK0ApREtk/WaiAuzddKVI/AAAAAAAAB_A/WPV5ropBU-cxrcMpqJBFHg73K9NX4vywwCLcBGAs/s640/image2.png">
+          <figcaption>Figure 1. The encoder self-attention distribution for the word "it" on the 5th and 6th layers of a Transformer (one of eight attention heads). From <a href="https://1.bp.blogspot.com/-AVGK0ApREtk/WaiAuzddKVI/AAAAAAAAB_A/WPV5ropBU-cxrcMpqJBFHg73K9NX4vywwCLcBGAs/s640/image2.png">Transformer: A Novel Neural Network Architecture for Language Understanding</a></figcaption>
+        </figure>
+
+        <h2 class="mt-5">Detailed explanation</h2>
+
+        <h3 class="mt-4">Query, key and value</h3>
+        <p>
+            The first step is to multiply each <a href="{{ url_for('learn_bert') }}#embeddings">word embedding</a> (or, if not the first
+            layer, the output of the previous layer), that is, a vector of numbers, by three different matrices whose weights were decided during training.
+            This results in three new vectors for each token in the input: the query, the key and the value.
+        </p>
+        <figure>
+          <img class="guide-image qkv" src="{{ url_for('static', filename='img/embeddings_to_qkv.png') }}">
+          <figcaption>Figure 2. A word embedding being multiplied by the three matrices in order to produce the query, key and value vectors.</figcaption>
+        </figure>
+        <p>
+            The queries and keys are used to determine how much attention the model should pay for a given pair of tokens. The query of the token being processed
+            is multiplied by the keys of each of the tokens in the input to determine the attention to pay for those tokens. The value can be thought as the 
+            value that the token's encoding should be if for the next steps if the model didn't pay any attention to other tokens.
+        </p>
+        
+        <h3 class="mt-4">Calculating self-attention</h3>
+        <p>
+            In order to calculate self-attention, the queries, keys and values of all tokens in the input must be calculated:
+        </p>
+        <figure>
+          <img class="guide-image all-qkv" src="{{ url_for('static', filename='img/generate-all-qkv.png') }}">
+          <figcaption>Figure 3. Calculate the query (green), key (yellow) and value (blue) of each token in "A simple sentence." (the tokenization step was hugely simplified 
+          for illustrative purposes).</figcaption>
+        </figure>
+        <p>
+            For each token, the weighted sum of all values must be calculated, with the weight being the attention to pay for each token.
+            This can be done as shown in the following figure:
+        </p>
+        <figure>
+          <img class="guide-image softmax" src="{{ url_for('static', filename='img/calculate-softmax.png') }}">
+          <figcaption>Figure 4. Calculate, for the word "A" in the example above, it's resulting encoding after the self-attention step (red) by doing a weighted sum
+          over all values (blue). The weights are the result of applying <a href="https://machinelearningmastery.com/softmax-activation-function-with-python/">softmax</a>
+          to the product of the respective query (green) and key (yellow) divided by the square root of the dimension of the key vectors (in the case of BERT, the dimension is 64
+          so the square root is 8).</figcaption>
+        </figure>
+        <h3 class="mt-4">Multi-head attention</h3>
+        <p>
+            Each Encoder actually applies the previous calculation in parallel using a different set of matrices to produce the query, key and value vectors.
+            This improves the model performance by expanding the possibility of focusing in different tokens and with different representations.
+        </p>
+        <p>
+            At the end of the individual self-attention calculations the model will have to combine all results to produce the final embedding.
+            For this, the results of each head are concatenated and then multiplied by a matrix whose weights are also determined during training, so as to
+            produce the combined result.
+        </p>
+        <figure>
+          <img class="guide-image multiple-heads" src="{{ url_for('static', filename='img/multiple-heads.png') }}">
+          <figcaption>Figure 5. The result of the multi-head attention is the product of a matrix by the concatenation of the result vectors of every head.</figcaption>
+        </figure>
+
+        <h2 class="mt-5">Attention weights and visualization</h2>
+        <p>
+            As seen in the previous section, the self-attention mechanism for each token is calculated as a weighted sum of the value vectors of 
+            the tokens in the input. The weight of each token is known as the attention weight.
+        </p>
+        <figure>
+          <img class="guide-image attention-weight-calc" src="{{ url_for('static', filename='img/attention_weight.png') }}">
+          <figcaption>Figure 6. The calculation of the attention weight of a pair of words, given the query of the first (green) and the key of the second (yellow).</figcaption>
+        </figure>
+        <p>
+            This website provides a way to easily <a href="{{ url_for('visualize_attention_heatmaps') }}">visualize the attention weights</a> for a given model given the input. It is possible to visualize
+            every head and layer separatedly, as well as the mean value of the weights for a given head or a given layer, or even for all heads and layers.
+        </p>
+        <p>
+            It is also possible to <a href="{{ url_for('visualize_compare_attention') }}">compare the attention weights</a> for a given pair of inputs.
+        </p>
+        <h2 class="mt-5">Matrix calculation</h2>
+        <p>
+            The self-attention calculation is highly paralelizable, and can be optimized with matrix operations to speed up the calculation in GPUs.
+            The calculation is very similar, but all input tokens are used at once by considering them as a matrix (a vector of token encodings, which 
+            are vectors themselves).
+        </p>
+        <p>
+            This matrix is still mutliplied by three other matrices to produce the query matrix, key matrix and value matrix. Those matrices are used
+            to calculate the weighted sum with a very similar formula to the one given above. Each head produces a matrix, and all results are still
+            concatenated and multiplied by a matrix to give the final matrix result.
+        </p>
+        <figure>
+          <img class="guide-image matrix-calc" src="{{ url_for('static', filename='img/matrix_attention_calculation.png') }}">
+          <figcaption>Figure 7. The self-attention mechanism using matrix operations.</figcaption>
+        </figure>
+      </div>
+    </main>
+  </div>
+{% endblock %}

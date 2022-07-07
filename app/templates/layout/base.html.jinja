@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+            name="description"
+            content="Visualizer of BERT's Attention Mechanism and analyser of adversarial attacks."
+        />
+        <meta
+            name="keywords"
+            content="BERT,Attention,Adversarial Attack,Shortcut Learning, DistilBERT,NLP"
+        />
+        <title>{% block title %}Attentive BERT{% endblock %}</title>
+        <link
+            rel="icon"
+            type="image/png"
+            href="{{ url_for('static', filename='favicon.png') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='style.css') }}"
+        />
+        <script
+            src="{{ url_for('static', filename='script.js') }}"
+            defer
+        ></script>
+    </head>
+    <body>
+        {% include 'layout/navbar.html.jinja' %} {% block body %}{% endblock %} {% include 'layout/footer.html.jinja' %}
+    </body>
+</html>

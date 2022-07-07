@@ -1,0 +1,52 @@
+.guide-image {
+    &.encoder-stack,
+    &.self-attention-intuition,
+    &.all-qkv,
+    &.wolf-or-husky {
+        max-width: 30em;
+        width: 80%;
+        min-width: 20em;
+    }
+
+    &.bert-base-large {
+        width: 90%;
+        min-width: 30em;
+    }
+    &.masked-language-modeling,
+    &.next-sentence-prediction,
+    &.qkv,
+    &.softmax,
+    &.attention-weight-calc {
+        width: 90%;
+        min-width: 5em;
+        max-width: 25em;
+    }
+
+    &.multiple-heads,
+    &.matrix-calc {
+        max-width: 50em;
+        width: 90%;
+        min-width: 30em;
+    }
+
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+figcaption {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    font-style: italic;
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+ins {
+    color: green;
+}
+
+del {
+    color: red;
+}

@@ -1,0 +1,214 @@
+{% extends "layout/base.html.jinja" %}
+{% block body %}
+    <div class="container-xl my-md-4">
+    <main class="article-main">
+      <div class="article-intro ps-lg-4">
+        <h1 class="article-title" id="content">BERT</h1>
+        <p class="article-lead">The Bidirectional Encoder Representations from Transformers, also known as BERT, is a language representation model introduced in 2018 that achieved state-of-the-art performance on a variety of NLP tasks.</p>
+      </div>
+        <div class="article-toc mt-4 mb-5 my-md-0 ps-xl-3 mb-lg-5 text-muted">
+          <strong class="d-block h6 my-2 pb-2 border-bottom">Page contents</strong>
+          <nav class="table-of-contents">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#bert-model-architecture">BERT Model Architecture</a>
+                    <ul class="nav flex-column sub-section">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#tokenization">Tokenization</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#embeddings">Embeddings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#the-encoder">The Encoder</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#bert-base-and-bert-large">BERT BASE and BERT LARGE</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#pretraining">Pretraining</a>
+                    <ul class="nav flex-column sub-section">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#masked-language-model">Masked Language Model</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#next-sentence-prediction">Next sentence prediction</a>
+                        </li>
+                      </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#bert-based-models">BERT-based Models</a>
+                    <ul class="nav flex-column sub-section">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#distilbert">DistilBERT</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#roberta">RoBERTa</a>
+                        </li>
+                      </ul>
+                </li>
+                </ul>
+            </nav>
+        </div>
+      
+
+      <div class="article-content ps-lg-4">
+        <p>
+            This model was proposed in <a href="https://arxiv.org/abs/1810.04805"><em>BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding (2018)</em></a>
+            by Jacob Devlin, Ming-Wei Chang, Kenton Lee and Kristina Toutanova. It is a model based on the <a href="https://arxiv.org/abs/1706.03762">Trasformer</a> architecture, more specifically it's encoders
+            (hence the model's name) and pretrained on a corpus consisting of the Toronto Book Corpus and Wikipedia with a combination of two techniques: masked language modeling objective 
+            and next sentence prediction. This model achieved state-of-the-art performance in many NLP tasks at the time the paper was published. Since then, many models
+            based on BERT have been proposed.
+        </p>
+        <p>
+            This model is bidirectional because when processing each word it takes into account the rest of the sentence, both before and after that word, instead
+            of only looking at the words that came before.
+        </p>
+        <h2 class="mt-5">BERT Model Architecture</h2>
+        <h3 class="mt-4">Tokenization</h3>
+        <p>
+            The first step in most NLP models is to tokenize the input text. This consists of splitting the text in various chunks (usually words or
+            parts of words), called tokens. This is not a trivial task. On one hand, it might make some sense to split a word in two tokens. As an example,
+            "aren't" is a word, but it may be split in "are" and "n't" to better capture the fact that it is equivalent to "are not". On the other hand,
+            some words separated by a space or a punctuation mark may make sense as a single token. For example, "U.S.A." has a meaning as a whole and it
+            might not be very good for the model performance if it is split into ["U", ".", "S", ".", "A", "."].
+        </p>
+        <p>
+            The BERT language model uses the <a href="https://static.googleusercontent.com/media/research.google.com/ja//pubs/archive/37842.pdf">WordPiece</a> 
+            tokenizer. This tokenizer starts by initializing the vocabulary so that it includes every character present in the training data. After that,
+            it will iteratively learn rules to merge pairs of tokens in the vocabulary so that it maximize the likelihood of the training data after the merge.
+            In this context, the likelihood of the training data for a pair of tokens consists of the frequency of that pair divided by the
+            product of the frequencies of the first and the second token.
+        </p>
+        <p>
+            Additionally, the tokenizer of the BERT model adds special tokens to the input. The model appends a special <em>[CLS]</em> token at the
+            beggining of the input, which stands for classification and is important for classification tasks, such as the ones described in the other
+            pages of this website. It also adds a <em>[SEP]</em> token at the end of the input. If the input consists of more than one sentence (as is
+            the case with the tasks described and used in this website), the sentences are concatenated, each ending with a <em>[SEP]</em> token. There
+            is also a <em>[PAD]</em> token that is ignored, used to normalize the input sizes when the model is processing a dataset in batch.
+        </p>
+        <h3 class="mt-4">Embeddings</h3>
+        <p>
+            Before the next step of the model, each token is individually converted into the respective embedding. An embedding is a representation of
+            the token as a vector of numbers that aims to capture the semantic meaning of the token. One of the most famous embedding algorithms is Word2Vec.
+            In this algorithm, the embeddings are produced by a neural
+            network that was trainined on the input data. In BERT, each of those vectors has 512 numbers. Each of these numbers doesn't have a meaning 
+            in themselves, but as a whole they encode the meaning of the token. For humans, the vectors don't seem to have meaning, however they
+            allow mathematical operations on the tokens, which is fundamental for the next steps of a language model. In fact, it is possible
+            to do meaningful operations with the embeddings that have an interpretation. For example, the <a href="https://en.wikipedia.org/wiki/Cosine_similarity">cosine similarity</a> 
+            between two vectors gives the semantic similarity between words. The offsets between embeddings can capture analogy relations between words 
+            (<a href="https://p.migdal.pl/2017/01/06/king-man-woman-queen-why.html">King - Man + Woman = Queen</a>).
+        </p>
+        <p>
+            In the case of the Transformers, such as BERT, in order to account for the order of the tokens in the input sentence, a positional encoding vector
+            is also added to each embedding. These vectors follow a pattern learnt by the model, which helps the model to determine the position of each token. 
+        </p>
+        <p>
+            Furthermore, in the case of BERT, the embedding neural network takes into account the entire sentence before assigning each token an embedding.
+            This neural network is a bidirectional neural network so that it takes into account the tokens before and after the given token. The forward and
+            backward components of this neural network are combined with an embedding initially calculated without any context of other tokens using a weighted
+            sum.
+        </p>
+        <h3 class="mt-4">The Encoder</h3>
+        <p>
+            The BERT Architecture is based on the Transformer architecture. The Transformer is mainly comprised of a stack of Encoders and a stack of Decoders.
+            The main difference between these two building blocks is that the Decoders have an extra component (the Encoder-Decoder Attention) and are used to
+            generate tokens to form text (the Decoders are used, for example, in the well-known 
+            <a href="https://d4mucfpksywv.cloudfront.net/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">GPT-2</a>). BERT does 
+            not use Transformers' Decoders, only the Encoders, so in this section we focus on the latter.
+        </p>
+        <figure>
+          <img class="guide-image encoder-stack" src="{{url_for('static', filename='img/encoder_stack.png')}}">
+          <figcaption>Figure 1. A stack of Encoders. The outputs of a given encoder is used as the inputs for the next encoder. For brevity, the subcomponents of the
+          encoder are only shown for the first.</figcaption>
+        </figure>
+        <p>
+            As shown in the figure, the two main components of the Encoder are the <a href="{{ url_for('learn_attention') }}">Self-Attention</a> mechanism (explained in <a href="{{ url_for('learn_attention') }}">Learn Self-Attention Mechanism</a>)
+            followed by a <a href="https://en.wikipedia.org/wiki/Feedforward_neural_network">Feed Forward neural network</a> applied on each input.
+            After both steps, a <a href="https://arxiv.org/abs/1607.06450">Layer Normalization</a> step is applied, combining the input and output of the respective
+            step so as to normalize the output, improving the results.
+        </p>
+        <p>
+            The first Encoder uses the word embeddings as input. The subsequent Encoders use the output of the previous Encoder as input.
+        </p>
+        <h3 class="mt-4">BERT BASE and BERT LARGE</h3>
+        <p>
+            The two versions of BERT proposed in the original paper have the same structure, but different sizes. BERT BASE was made with a
+            size comparable to the OpenAI Transformer in order to compare performance. On the other hand, BERT LARGE is a huge model which
+            achieved the state-of-the-art performance reported by the authors.
+
+        </p>
+        <figure>
+          <img class="guide-image bert-base-large" src="{{url_for('static', filename='img/bert_base_large.png')}}">
+          <figcaption>Figure 2. Size comparison of the two BERT versions proposed in the original paper. The attention heads are explained in <a href="{{ url_for('learn_attention') }}">Learn Self-Attention Mechanism</a>.</figcaption>
+        </figure>
+
+        <h2 class="mt-5">Pretraining</h2>
+        <p>
+            The BERT model was pretrained with semi-supervised on a corpus consisting of the Toronto Book Corpus and Wikipedia. Two tasks were used to train the model:
+            masked language modeling and next sentence prediction.
+        </p>
+        <p>
+            The model may be finetuned for a specific task with supervised learning on a labelled dataset.
+        </p>
+        <h3 class="mt-4">Masked Language Model</h3>
+        <p>
+            In this task, the model receives an input sentence with some of its tokens masked. The model then has to predict what were the masked tokens.
+            To mask a token, it is replaced with a special <em>[MASK]</em> token. The output of the last Encoder corresponding to the masked token is then
+            used as the input to a Feed Forward neural network and a <a href="https://machinelearningmastery.com/softmax-activation-function-with-python/">softmax layer</a>,
+            which gives the model's confidence in each possible token in the vocabulary.
+        </p>
+        <figure>
+          <img class="guide-image masked-language-modeling" src="{{url_for('static', filename='img/masked_language_modeling.png')}}">
+          <figcaption>Figure 3. Masked language model. The softmax layer actually gives the confidence in each possible answer. The predicted answer can be
+          picked as the one with the most confidence.</figcaption>
+        </figure>
+        <p>
+            Beyond masking 15% of the input, BERT also sometimes replaces a token with a different token when trying to predict which token should have been
+            in that position.
+        </p>
+        <h3 class="mt-4">Next sentence prediction</h3>
+        <p>
+            The next sentence predition is a classification task where the model receives a pair of input sentences and has to predict whether the second sentence
+            comes immediately after the first sentence.
+        </p>
+        <p>
+            Since it is a classification task, the model uses the output corresponding to the <em>[CLS]</em> to make the prediction. The prediction is also done
+            with a Feed Forward neural network and a <a href="https://machinelearningmastery.com/softmax-activation-function-with-python/">softmax layer</a>, this
+            time with the confidence of each possible classification label.
+        </p>
+        <figure>
+          <img class="guide-image next-sentence-prediction" src="{{url_for('static', filename='img/next_sentence_prediction.png')}}">
+          <figcaption>Figure 4. Next sentence prediction. The softmax layer actually gives the confidence in each possible answer. The predicted answer can be
+          picked as the one with the most confidence.</figcaption>
+        </figure>
+        <p>
+            The classification tasks that are described and used in this website are handled in a similar way.
+        </p>
+        <h2 class="mt-5">BERT-based Models</h2>
+        <p>
+            Since the release of <a href="https://arxiv.org/abs/1810.04805"><em>BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding (2018)</em></a>,
+            many models based on BERT have been released, with similar architecture but different size or pretraining. Two such examples are DistilBERT and RoBERTa.
+        </p>
+        <h3 class="mt-4">DistilBERT</h3>
+        <p>
+            This model was introduced in <a href="https://arxiv.org/abs/1910.01108v4"><em>DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter</em></a> 
+            and it is designed to reduce the size of the model while maintaining it's performance. It has 40% less parameters than BERT BASE and is 60% faster, while retaining
+            97% of it's language understanding capabilities. It achieves so with <a href="https://neptune.ai/blog/knowledge-distillation">Knowledge Distillation</a>, which is a technique
+            that uses the existing BERT models, capturing and distilling its knowledge, to train a smaller version of it.
+        </p>
+        <p>
+            A big advantage of this model is that it only uses 6 layers (with 12 attention heads), instead of the 12 layers of BERT BASE. This reduces the number
+            of attention weights to visualize, which means that the model is easier to interpret.
+        </p>
+        <h3 class="mt-4">RoBERTa</h3>
+        <p>
+            This model was proposed in <a href="https://arxiv.org/abs/1907.11692"><em>RoBERTa: A Robustly Optimized BERT Pretraining Approach</em></a>. It is a larger
+            model trained with bigger batch sizes and longer sequences. It removes the <a href="#next-sentence-prediction">Next Sentence Prediction Task</a> objective in pretraining.
+        </p>
+      </div>
+    </main>
+  </div>
+{% endblock %}

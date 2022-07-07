@@ -1,0 +1,39 @@
+{% extends "layout/base.html.jinja" %}
+{% block body %}
+    <div class="container my-4">
+        <main>
+            <div class="main-logo mt-5 mb-5">
+                <img src="{{url_for('static', filename='img/logo.png')}}"> <span>Attentive<strong>BERT</strong></span>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="container my-4">
+                        <h1>Learn</h1>
+                        <p class="text-justify mb-4">Find more about BERT, its attention mechanism, shortcut learning and adversarial attacks, as well as 3 classification tasks in natural language processing.</p>
+                        <a href="{{ url_for('learn_bert') }}" class="btn btn-primary wide-form-item mx-3 justify-content-center" type="button">Learn BERT</a>
+                        <a href="{{ url_for('learn_attention') }}" class="btn btn-primary wide-form-item mx-3 justify-content-center" type="button">Learn Self-Attention</a>
+                        <a href="{{ url_for('learn_nli') }}" class="btn btn-primary wide-form-item mx-3 justify-content-center" type="button">Learn NLI</a>
+                        <a href="{{ url_for('learn_ari') }}" class="btn btn-primary wide-form-item mx-3 justify-content-center" type="button">Learn ARI</a>
+                        <a href="{{ url_for('learn_fv') }}" class="btn btn-primary wide-form-item mx-3 justify-content-center" type="button">Learn FV</a>
+                        <a href="{{ url_for('learn_shortcut_learning') }}" class="btn btn-primary wide-form-item mx-3 justify-content-center" type="button">Learn Shortcut learning</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="container my-4">
+                        <h1>Visualize</h1>
+                        <p class="text-justify mb-4">Visualize the attention weights for every layer and head for a given input to the model.</p>
+                        <a href="{{ url_for('visualize_attention_heatmaps') }}" class="btn btn-primary wide-form-item mx-3 justify-content-center" type="button">Visualize single input</a>
+                        <a href="{{ url_for('visualize_compare_attention') }}" class="btn btn-primary wide-form-item mx-3 justify-content-center" type="button">Compare two inputs</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="container my-4">
+                        <h1>Adversarial Attacks</h1>
+                        <p class="text-justify mb-4">Generate adversarial attacks or browse a pregenerated list using different methods, so as to visualize the attention weights before and after the attack.</p>
+                        <a href="{{ url_for('adversarial_attacks') }}" class="btn btn-primary wide-form-item mx-3 justify-content-center" type="button">Adversarial attacks</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+{% endblock %}
