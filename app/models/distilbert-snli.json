@@ -307,18 +307,18 @@
                 "sentence_1": "A homeless man carries a sign that says \"hungry\".",
                 "sentence_2": "The man does not have a home.",
                 "prediction": {
-                    "contradiction": 0.2970373332500458,
-                    "entailment": 0.512142539024353,
-                    "neutral": 0.1908201426267624
+                    "contradiction": 0.20412079989910126,
+                    "entailment": 0.46448230743408203,
+                    "neutral": 0.3313969075679779
                 }
             },
             "attacked": {
                 "sentence_1": "A homeless man carries a sign that says \"hungry\".",
                 "sentence_2": "The man doesn't have a home.",
                 "prediction": {
-                    "contradiction": 0.42968448996543884,
-                    "entailment": 0.33654847741127014,
-                    "neutral": 0.2337670624256134
+                    "contradiction": 0.3131515681743622,
+                    "entailment": 0.2466762363910675,
+                    "neutral": 0.4401722550392151
                 }
             }
         },

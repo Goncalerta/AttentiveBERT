@@ -137,6 +137,8 @@ function createPrediction(task, predictions) {
     } else {
         labels = ['entailment', 'contradiction', 'neutral'];
     }
+
+    console.log(predictions);
     const positiveLabel = labels[0];
     const negativeLabel = labels[1];
     const neutralLabel = labels[2];
@@ -149,7 +151,7 @@ function createPrediction(task, predictions) {
     best.classList.add('prediction-best');
     if (
         predictions[positiveLabel] > predictions[neutralLabel] &&
-        predictions[positiveLabel] > predictions[neutralLabel]
+        predictions[positiveLabel] > predictions[negativeLabel]
     ) {
         best.innerHTML = positiveLabel;
         best.classList.add('prediction-best-positive');
