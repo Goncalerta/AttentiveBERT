@@ -49,7 +49,7 @@ The syntax for the configuration file (with the default values) is as follows:
 ```json
 {
     "source": *NOT OPTIONAL*, // String. The HuggingFace source for the model, for example "boychaboy/SNLI_distilbert-base-cased"
-    "task": *NOT OPTIONAL*, // String. The task (NLI, ARI, FV)
+    "task": *NOT OPTIONAL*, // String. The task (nli, ari, fv)
     "disabled": false, // Boolean. Whether this model is disabled. Disabled models are ignored when starting the server.
     "model_name": null, // String. The name of the model (BERT-BASE, DistilBERT, ...)
     "cased": null, // Boolean. Whether this model is case-sensitive
