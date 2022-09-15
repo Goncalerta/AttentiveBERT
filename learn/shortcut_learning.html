@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+            name="description"
+            content="Visualizer of BERT's Attention Mechanism and analyser of adversarial attacks."
+        />
+        <meta
+            name="keywords"
+            content="BERT,Attention,Adversarial Attack,Shortcut Learning, DistilBERT,NLP"
+        />
+        <title>Attentive BERT</title>
+        <link
+            rel="icon"
+            type="image/png"
+            href="../resources/favicon.png"
+        />
+        <link
+            rel="stylesheet"
+            href="../resources/style.css"
+        />
+        <script
+            src="../resources/script.js"
+            defer
+        ></script>
+    </head>
+    <body>
+        <nav aria-label="Navbar" class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container-md">
+        <div class="navbar-leftmost">
+            <button
+                aria-controls="navbarContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+                class="navbar-toggler"
+                data-bs-target="#navbarContent"
+                data-bs-toggle="collapse"
+                type="button"
+            >
+                <span class="navbar-toggler-icon">
+                </span>
+            </button>
+            <a class="navbar-brand" href="../index.html">
+                <img src="../resources/img/logo.png"> Attentive<strong>BERT</strong>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Learn</a>
+                    <ul class="dropdown-menu navbar-dropdown-animation">
+                        <li><a class="dropdown-item" href="../learn/bert.html">BERT</a></li>
+                        <li><a class="dropdown-item" href="../learn/attention.html">Self-Attention mechanism</a></li>
+                        <li><a class="dropdown-item" href="../learn/nli.html">Natural Language Inference (NLI)</a></li>
+                        <li><a class="dropdown-item" href="../learn/ari.html">Argumentative Relation Identification (ARI)</a></li>
+                        <li><a class="dropdown-item" href="../learn/fv.html">Fact Verification (FV)</a></li>
+                        <li><a class="dropdown-item" href="../learn/shortcut_learning.html">Shortcut learning</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Visualize</a>
+                    <ul class="dropdown-menu navbar-dropdown-animation">
+                        <li><a class="dropdown-item" href="../visualize/attention_heatmaps.html">Attention weights (Single input)</a></li>
+                        <li><a class="dropdown-item" href="../visualize/compare_attention.html">Compare attention weights (Two inputs)</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../adversarial_attacks.html">
+                        Adversarial Attacks
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="../about.html">
+                        About
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/Goncalerta/AttentiveBERT">
+                        <i class="bi bi-github"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container-xl my-md-4">
+    <main class="article-main">
+      <div class="article-intro ps-lg-4">
+        <h1 class="article-title" id="content">Shortcut learning</h1>
+        <p class="article-lead">Shortcut learning occurs when neural networks make a correct prediction based on spurious artifacts in the training data, thus becoming prone to perform poorly in the presence of adversarial attacks.</p>
+      </div>
+        <div class="article-toc mt-4 mb-5 my-md-0 ps-xl-3 mb-lg-5 text-muted">
+          <strong class="d-block h6 my-2 pb-2 border-bottom">Page contents</strong>
+          <nav class="table-of-contents">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#what-is-shortcut-learning">What is shortcut learning</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#adversarial-attacks">Adversarial attacks</a>
+                    <ul class="nav flex-column sub-section">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#types-of-adversarial-attacks">Types of adversarial attacks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#attacks-in-the-literature">Attacks in the literature</a>
+                            <ul class="nav flex-column sub-section">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#textfooler">TextFooler</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#bert-attack">BERT-Attack</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#bae">BAE</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#kuleshov2017">Kuleshov2017</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#pwws">PWWS</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#inputreduction">InputReduction</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#checklist">CheckList</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                </ul>
+            </nav>
+        </div>
+      
+
+      <div class="article-content ps-lg-4">
+        <h2 class="mt-5">What is shortcut learning</h2>
+        <p>
+            In a general sense, when training, deep neural networks are tweaking their internal parameters so as to maximize the number of 
+            correct predictions. It often happens that it is able to maximize its performance by taking shortcuts instead of using the
+            intended features. Such shortcuts consist of spurious artifacts in the training data that might not be present in different datasets.
+            This leads to a lack of generalisation and unintuitive failures, since the model will not be able to do predictions on data without 
+            the spurious artifacts this pattern can be observed in many real-world applications, as discussed in
+            <a href="https://www.nature.com/articles/s42256-020-00257-z">Shortcut learning in deep neural networks</a>.
+        </p>
+        <p>
+            This phenomenon can happen in other areas of deep learning besides NLP, such as in computer vision.
+        </p>
+
+        <figure>
+          <img class="guide-image wolf-or-husky" src="https://www.tlnt.com/wp-content/uploads/sites/4/2019/12/AI-wolf-or-husky.jpg">
+          <figcaption>Figure 1. An illustrative case of shortcut learning in computer vision. The model is trying to predict whether there is a husky or a wolf in the photo but it is actually predicting whether the background has snow, given that the original dataset was biased towards a correlation of the background having snow and the animal being a wolf. Image from <a href="https://www.tlnt.com/without-adult-supervision-ai-cant-tell-the-wolves-from-the-huskies/">Without Adult Supervision AI Can’t Tell the Wolves From the Huskies</a>.</figcaption>
+        </figure>
+
+        <h2 class="mt-5">Adversarial attacks</h2>
+        <p>
+            Shortcut learning in machine learning models makes them prone to perform poorly in the presence of adversarial attacks.
+            An adversarial attack tries to make minimal superficial changes that are irrelevant for humans but that fool the model
+            into changing its prediction to a wrong prediction. Given that shortcut learning means that the model takes into account
+            spurious features, if an adversarial attack changes those features (which should have been irrelavant to solve the task) it will 
+            change the prediction of the model.
+        </p>
+        <p>
+            Although the concept of Adversarial Attacks can be explored in the context of Natural Language Processing and this is a very active 
+            area of research, it is more commonly associated with computer vision. In computer vision, it is trivial to produce small changes
+            that are undetectable by humans by tweaking the value of some pixels in the image while staying below a given threshold. By comparing
+            the prediction of the model before and after the attack, it is possible to say if the attack was successful or not (by seeing if the 
+            prediction changed).
+        </p>
+        <p>
+            However, since NLP deals with discrete data (words), all possible changes are very visible to humans so an adversarial attack
+            will necessarily change the original sentence, but it should try to keep the text's semantic meaning and grammaticality.
+            Determining whether two sentences have the same semantic meaning is 
+            <a href="https://aclanthology.org/2020.blackboxnlp-1.22.pdf">an open problem in NLP</a>, which means that automatically creating
+            an adversarial attack that maintains the semantic meaning of the original sentence is non-trivial. As such, methods to produce
+            adversarial attacks often involve the use of other NLP models, but those models won't guarantee that the semantic meaning is maintained.
+            It is thus possible for an adversarial attack to change the target model's prediction but still be unsuccessful (because the meaning
+            of the sentence actually changed after the attack and the new label is correct or because the sentence has lost its meaning), however there is no 
+            way to automatically tell if that's the case.
+        </p>
+        <p>
+            For example, given the sentence "A bicyclist wearing white sunglasses and a white and black helmet.", it has an entailment relation 
+            with the sentence "The human wears glasses.", but an automatic adversarial attack might change "glasses" to "bottles", which is a synonym
+            in some cases, but not in this one, and the sentence doesn't have an entailment relation with "The human wears bottles.". It is
+            expected that the model changes the prediction.
+        </p>
+
+        <h3 class="mt-4">Types of adversarial attacks</h3>
+        <p>
+            According to <a href="https://aclanthology.org/2020.findings-emnlp.341/"><em>Reevaluating Adversarial Examples in Natural Language</em></a>,
+            there are 5 types of adversarial attacks:
+        </p>
+        <p>
+            (Given the original sentence <em>"The teenager boy walks on the street"</em>)
+        </p>
+            <ul>
+                <li>Attack by word insertion. <em>i.e. "The teenager boy <ins>happily</ins> walks on the street"</em></li>
+                <li>Attack by word removal. <em>i.e. "The <del>teenager</del> boy walks on the street"</em></li>
+                <li>Attack by synonym substitution. <em>i.e. "The <ins>adolescent</ins> boy walks on the street"</em></li>
+                <li>Attack by paraphrase. <em>i.e. "A minor is on the street walking"</em></li>
+                <li>Attack by character substitution. <em>i.e. "The teenager boy w<ins>o</ins>lks on the street"</em></li>
+            </ul>
+        <p>
+            Attacks by character substitution aim at producing typos that a human wouldn't notice, however they will make the sentence 
+            agrammatical and might even change the words to words of completely unrelated meaning. Attacks by paraphrase completely
+            change the sentence but retain its original meaning. Attacks by word insertion and removal add or remove irrelevant information.
+            Attacks by synonym substitution change the words with synonyms so that the meaning doesn't change although the token did.
+        </p>
+
+
+        <h3 class="mt-4">Attacks in the literature</h3>
+        <p>
+            Since this is a problem with active research in NLP, many attacks have been proposed in the literature. It is possible to experiment with
+            them using the <a href="https://textattack.readthedocs.io/en/latest/apidoc/textattack.attack_recipes.html">TextAttack</a> python library.
+            The following subsections will focus on the attacks available <a href="../adversarial_attacks.html">on this website</a>, which only do word insertion, removal and synonym substitution.
+        </p>
+        <h4 class="mt-4">TextFooler</h4>
+        <p>
+            Proposed in <a href="https://arxiv.org/abs/1907.11932"><em>Is BERT Really Robust? Natural Language Attack on Text Classification and Entailment</em></a>,
+            it works by ranking the words according to their importance (that is, their capability of changing the model's prediction) and then substitutes the most
+            important words by others such that the semantic similarity is above a given threshold.
+        </p>
+
+        <h4 class="mt-4">BERT-Attack</h4>
+        <p>
+            Proposed in <a href="https://arxiv.org/abs/2004.09984"><em>BERT-ATTACK: Adversarial Attack Against BERT Using BERT</em></a>,
+            it works finding the most vulnerable words (that is, the ones with more capability of changing the model's prediction), masks them,
+            and uses BERT to predict new words for that context using masked language modeling.
+        </p>
+        <h4 class="mt-4">BAE</h4>
+        <p>
+            Proposed in <a href="https://arxiv.org/pdf/2004.01970"><em>BAE: BERT-based Adversarial Examples for Text Classification</em></a>,
+            it works by inserting or replacing tokens via BERT's masked language modeling.
+        </p>
+
+        <h4 class="mt-4">Kuleshov2017</h4>
+        <p>
+            Proposed in <a href="https://openreview.net/pdf?id=r1QZ3zbAZ"><em>Generating Natural Language Adversarial Examples</em></a>,
+            it works by greedily swapping the words that change the score the most, while forcing some constraints of semantic and syntatic
+            similarity.
+        </p>
+
+        <h4 class="mt-4">PWWS</h4>
+        <p>
+            Proposed in <a href="https://www.aclweb.org/anthology/P19-1103/"><em>Generating Natural Language Adversarial Examples through Probability Weighted Word Saliency</em></a>,
+            it works by prioritizing words for a synonym-swap transformation based on a combination of their saliency score and maximum word-swap effectiveness.
+        </p>
+
+        <h4 class="mt-4">InputReduction</h4>
+        <p>
+            Proposed in <a href="https://arxiv.org/abs/1804.07781"><em>Pathologies of Neural Models Make Interpretations Difficult</em></a>,
+            it works iteratively removing the least important word in the sentence.
+        </p>
+
+        <h4 class="mt-4">CheckList</h4>
+        <p>
+            Proposed in <a href="https://arxiv.org/abs/2005.04118"><em>Beyond Accuracy: Behavioral Testing of NLP models with CheckList</em></a>,
+            it focuses on a number of attacks used in the Invariance Testing Method: Contraction, Extension, Changing Names, Number, Location.
+        </p>
+        <p>
+            For example, it changes the name of a person or location, changes a contraction to its extended form or vice-versa ("don't" and "do not"), and 
+            it changes quantities.
+        </p>
+      </div>
+    </main>
+  </div>
+ <div class="container mt-4">
+    <hr>
+    <footer>
+        <p class="mb-0 copyright">Copyright &copy; Pedro Gonçalo Correia 2022</p>
+        <p class="mb-0 copyright">This website and its content is licensed under the <a href="https://github.com/Goncalerta/AttentiveBERT/blob/main/LICENSE">GNU GENERAL PUBLIC LICENSE v3</a>.</p>
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link ps-0" href="mailto: pedrogoncalocorreia@hotmail.com"><i class="bi bi-envelope"></i> pedrogoncalocorreia@hotmail.com</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link ps-0" href="https://github.com/Goncalerta"><i class="bi bi-github"></i> Github</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link ps-0" href="https://www.linkedin.com/in/pedro-goncalo-correia/"><i class="bi bi-linkedin"></i> Linkedin</a>
+            </li>
+        </ul>
+    </footer>
+</div>
+    </body>
+</html>

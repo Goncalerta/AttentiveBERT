@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+            name="description"
+            content="Visualizer of BERT's Attention Mechanism and analyser of adversarial attacks."
+        />
+        <meta
+            name="keywords"
+            content="BERT,Attention,Adversarial Attack,Shortcut Learning, DistilBERT,NLP"
+        />
+        <title>Attentive BERT</title>
+        <link
+            rel="icon"
+            type="image/png"
+            href="../resources/favicon.png"
+        />
+        <link
+            rel="stylesheet"
+            href="../resources/style.css"
+        />
+        <script
+            src="../resources/script.js"
+            defer
+        ></script>
+    </head>
+    <body>
+        <nav aria-label="Navbar" class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container-md">
+        <div class="navbar-leftmost">
+            <button
+                aria-controls="navbarContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+                class="navbar-toggler"
+                data-bs-target="#navbarContent"
+                data-bs-toggle="collapse"
+                type="button"
+            >
+                <span class="navbar-toggler-icon">
+                </span>
+            </button>
+            <a class="navbar-brand" href="../index.html">
+                <img src="../resources/img/logo.png"> Attentive<strong>BERT</strong>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Learn</a>
+                    <ul class="dropdown-menu navbar-dropdown-animation">
+                        <li><a class="dropdown-item" href="../learn/bert.html">BERT</a></li>
+                        <li><a class="dropdown-item" href="../learn/attention.html">Self-Attention mechanism</a></li>
+                        <li><a class="dropdown-item" href="../learn/nli.html">Natural Language Inference (NLI)</a></li>
+                        <li><a class="dropdown-item" href="../learn/ari.html">Argumentative Relation Identification (ARI)</a></li>
+                        <li><a class="dropdown-item" href="../learn/fv.html">Fact Verification (FV)</a></li>
+                        <li><a class="dropdown-item" href="../learn/shortcut_learning.html">Shortcut learning</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Visualize</a>
+                    <ul class="dropdown-menu navbar-dropdown-animation">
+                        <li><a class="dropdown-item" href="../visualize/attention_heatmaps.html">Attention weights (Single input)</a></li>
+                        <li><a class="dropdown-item" href="../visualize/compare_attention.html">Compare attention weights (Two inputs)</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../adversarial_attacks.html">
+                        Adversarial Attacks
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="../about.html">
+                        About
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/Goncalerta/AttentiveBERT">
+                        <i class="bi bi-github"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container-xl my-md-4">
+    <main class="article-main">
+      <div class="article-intro ps-lg-4">
+        <h1 class="article-title" id="content">Argumentative Relation Identification</h1>
+        <p class="article-lead">Argumentative Relation Identification (ARI) is a subtask of Argument Mining (AM) and aims at classifying if a given source Argumentative Discourse Unit (ADU) supports, attacks, or is unrelated to a second ADU <a href="https://aclanthology.org/D15-1110/">[Peldszus and Stede, 2015]</a>.</p>
+      </div>
+        <div class="article-toc mt-4 mb-5 my-md-0 ps-xl-3 mb-lg-5 text-muted">
+          <strong class="d-block h6 my-2 pb-2 border-bottom">Page contents</strong>
+          <nav class="table-of-contents">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="#task">Task</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#datasets">Datasets</a>
+                    <ul class="nav flex-column sub-section">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#argumentative-essays-corpus-english-dataset">Argumentative Essays Corpus (english dataset)</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#argmine-corpus-portuguese-dataset">ArgMine Corpus (portuguese dataset)</a>
+                        </li>
+                      </ul>
+                </li>
+                </ul>
+            </nav>
+        </div>
+      
+
+      <div class="article-content ps-lg-4">
+        <h2 class="mt-5">Task</h2>
+        <p>
+            ARI is a classification task that is a subtask of the Argument Mining task. Argument mining is research area with the goal of
+            automatically extract and identify argumentative structures. The ARI subtask consists of determining, for two sentences
+            with argumentative content (also known as Argumentative Discourse Units), whether the first attacks, supports, or is unrelated 
+            to the second. The first sentence is known as Source ADU and the second as Target ADU.
+        </p>
+        <p>
+            Since it is a classification task, the model uses the output corresponding to the <em>[CLS]</em> to make the prediction. The prediction is done
+            with a Feed Forward neural network and a <a href="https://machinelearningmastery.com/softmax-activation-function-with-python/">softmax layer</a>,
+            giving the confidence of each possible classification label.
+        </p>
+        <figure>
+          <img class="guide-image img-ari" src="../resources/img/argumentative_relation_identification.png">
+          <figcaption>Figure 1. Argumentative Relation Identification. The softmax layer actually gives the confidence in each possible answer. The predicted answer can be
+          picked as the one with the most confidence.</figcaption>
+        </figure>
+
+        <h2 class="mt-5">Datasets</h2>
+
+        <h3 class="mt-4">Argumentative Essays Corpus (english dataset)</h3>
+        <p>
+            The <a href="https://aclanthology.org/J17-3005/">Argumentative Essays Corpus (AE)</a> was introduced in 
+            <a href="https://aclanthology.org/J17-3005/"><em>Parsing Argumentation Structures in Persuasive Essays</em></a>.
+        </p>
+        
+        <figure>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Source ADU</th>
+                <th scope="col">Target ADU</th>
+                <th scope="col">Label</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td scope="col">Teachers are not just teachers, they are also friends and conseilieurs</td>
+                    <td scope="col">In conclusion, there can be no school without a teacher</td>
+                    <td scope="col">Support</td>
+                </tr>
+                <tr>
+                    <td scope="col">computers need to be operated by people</td>
+                    <td scope="col">no one can argue that technological tools are must-haves for the classroom</td>
+                    <td scope="col">None</td>
+                </tr>
+            </tbody>
+          </table>
+          <figcaption>Figure 2. Some AE Corpus entries.</figcaption>
+        </figure>
+        
+        <h3 class="mt-4">ArgMine Corpus (portuguese dataset)</h3>
+        <p>
+            The <a href="https://web.fe.up.pt/~argmine/">ArgMine corpus</a> is a portuguese dataset for ARI that envisions to automatically 
+            extract the argumentative reasoning included in textual documents, such as opinion articles.
+        </p>
+        <figure>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Source ADU</th>
+                <th scope="col">Target ADU</th>
+                <th scope="col">Label</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td scope="col">Durante a última década, a saúde, o meio ambiente, a biodiversidade, assim como a evolução humana tem sido temas recorrentes em todos os meios de comunicação.</td>
+                    <td scope="col">O século XXI é sem sombra de dúvida a era da Biologia.</td>
+                    <td scope="col">Support</td>
+                </tr>
+                <tr>
+                    <td scope="col">Seria da mais elementar prudência não voltar a precisar de lhe pedir dinheiro</td>
+                    <td scope="col">O fluxo de migrantes agravou o peso do euroceptismo nos governos</td>
+                    <td scope="col">None</td>
+                </tr>
+            </tbody>
+          </table>
+          <figcaption>Figure 3. Some ArgMine Corpus entries.</figcaption>
+        </figure>
+      </div>
+    </main>
+  </div>
+ <div class="container mt-4">
+    <hr>
+    <footer>
+        <p class="mb-0 copyright">Copyright &copy; Pedro Gonçalo Correia 2022</p>
+        <p class="mb-0 copyright">This website and its content is licensed under the <a href="https://github.com/Goncalerta/AttentiveBERT/blob/main/LICENSE">GNU GENERAL PUBLIC LICENSE v3</a>.</p>
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link ps-0" href="mailto: pedrogoncalocorreia@hotmail.com"><i class="bi bi-envelope"></i> pedrogoncalocorreia@hotmail.com</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link ps-0" href="https://github.com/Goncalerta"><i class="bi bi-github"></i> Github</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link ps-0" href="https://www.linkedin.com/in/pedro-goncalo-correia/"><i class="bi bi-linkedin"></i> Linkedin</a>
+            </li>
+        </ul>
+    </footer>
+</div>
+    </body>
+</html>

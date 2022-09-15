@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+            name="description"
+            content="Visualizer of BERT's Attention Mechanism and analyser of adversarial attacks."
+        />
+        <meta
+            name="keywords"
+            content="BERT,Attention,Adversarial Attack,Shortcut Learning, DistilBERT,NLP"
+        />
+        <title>Attentive BERT</title>
+        <link
+            rel="icon"
+            type="image/png"
+            href="../resources/favicon.png"
+        />
+        <link
+            rel="stylesheet"
+            href="../resources/style.css"
+        />
+        <script
+            src="../resources/script.js"
+            defer
+        ></script>
+    </head>
+    <body>
+        <nav aria-label="Navbar" class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container-md">
+        <div class="navbar-leftmost">
+            <button
+                aria-controls="navbarContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+                class="navbar-toggler"
+                data-bs-target="#navbarContent"
+                data-bs-toggle="collapse"
+                type="button"
+            >
+                <span class="navbar-toggler-icon">
+                </span>
+            </button>
+            <a class="navbar-brand" href="../index.html">
+                <img src="../resources/img/logo.png"> Attentive<strong>BERT</strong>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Learn</a>
+                    <ul class="dropdown-menu navbar-dropdown-animation">
+                        <li><a class="dropdown-item" href="../learn/bert.html">BERT</a></li>
+                        <li><a class="dropdown-item" href="../learn/attention.html">Self-Attention mechanism</a></li>
+                        <li><a class="dropdown-item" href="../learn/nli.html">Natural Language Inference (NLI)</a></li>
+                        <li><a class="dropdown-item" href="../learn/ari.html">Argumentative Relation Identification (ARI)</a></li>
+                        <li><a class="dropdown-item" href="../learn/fv.html">Fact Verification (FV)</a></li>
+                        <li><a class="dropdown-item" href="../learn/shortcut_learning.html">Shortcut learning</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Visualize</a>
+                    <ul class="dropdown-menu navbar-dropdown-animation">
+                        <li><a class="dropdown-item" href="../visualize/attention_heatmaps.html">Attention weights (Single input)</a></li>
+                        <li><a class="dropdown-item" href="../visualize/compare_attention.html">Compare attention weights (Two inputs)</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../adversarial_attacks.html">
+                        Adversarial Attacks
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="../about.html">
+                        About
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/Goncalerta/AttentiveBERT">
+                        <i class="bi bi-github"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container my-4">
+    <main>
+      <div class="article-intro ps-lg-4">
+        <h1 class="article-title" id="content">Visualize attention weights</h1>
+        <p class="article-lead">Input a pair of sentences for one of the available tasks to see the model prediction and visualize the attention weights for each head.</p>
+        <div class="alert alert-danger mx-5" role="alert">
+          <b><i class="bi bi-exclamation-triangle"></i> Warning:</b> You are browsing a static version of this website. Since there is no backend it is not possible to run any models.
+        </div>
+      </div>
+      <div class="article-content px-lg-4">
+            <form class="visualize-form visualize-single-form container px-m-5">
+                <div class="task-selection mb-2">
+                  <label for="task" class="form-label ">Task:</label>
+                  <div class="input-loose-group mb-3">
+                    <select disabled name="task" class="form-select" aria-label="Select task">
+                      <option selected disabled></option>
+                    </select>
+                    <i class="bi bi-question-circle help-tooltip help-tooltip-model" data-bs-toggle="tooltip" data-bs-placement="top"></i>
+                  </div>
+                  <label for="model" class="form-label ">Model:</label>
+                  <div class="input-loose-group mb-3">
+                    <select name="model" class="form-select form-select-model form-select-nli" aria-label="Select model" disabled>
+                      <option value="0" selected disabled data-abert-description="Not available."></option>
+                    </select>
+                    <i class="bi bi-question-circle help-tooltip help-tooltip-model" data-bs-toggle="tooltip" data-bs-placement="top"></i>
+                  </div>
+                </div>
+                <div class="model-runner">
+                  <label for="sentence_a" class="form-label">{{label['a']}}:</label>
+                  <input disabled
+                      name="sentence_a"
+                      type="text"
+                      placeholder="Enter text..."
+                      class="form-control">
+                  <label for="sentence_b" class="form-label">{{label['b']}}:</label>
+                  <input disabled class="form-control" name="sentence_b" type="text" placeholder="Enter text...">
+                  <button disabled type="submit" class="btn btn-primary">Run</button>
+                </div>
+            </form>
+      </div>
+      <div class="d-flex justify-content-center d-none" id="loading-spinner">
+        <div class="spinner-border text-primary" role="status"></div>
+      </div>
+      <div class="d-flex">
+        <div id="attention-visualizer" class="mx-auto"></div>
+      </div>
+    </main>
+    <div class="px-3">
+        <h2>About this visualizer</h2>
+          <p>Upon submitting a pair of sentences, the model will output a prediction and show the confidence on each label. It will also output an interactive heatmap of attention weights.</p>
+          <p>Each cell of the heatmap encodes the attention from the token in the y axis to the token in the x axis. The buttons panel allows to select a single head of a single layer. 
+          Clicking on a layer label will show the average weights of all heads in that layer. Clicking on a head label will show the average weights of the heads in that position in every layer.
+          Clicking on the circle on the lower left of the buttons panel will show the average of all heads in every layer.</p>
+        </div>
+        </div>
+    </main>
+  </div>
+ <div class="container mt-4">
+    <hr>
+    <footer>
+        <p class="mb-0 copyright">Copyright &copy; Pedro Gonçalo Correia 2022</p>
+        <p class="mb-0 copyright">This website and its content is licensed under the <a href="https://github.com/Goncalerta/AttentiveBERT/blob/main/LICENSE">GNU GENERAL PUBLIC LICENSE v3</a>.</p>
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link ps-0" href="mailto: pedrogoncalocorreia@hotmail.com"><i class="bi bi-envelope"></i> pedrogoncalocorreia@hotmail.com</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link ps-0" href="https://github.com/Goncalerta"><i class="bi bi-github"></i> Github</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link ps-0" href="https://www.linkedin.com/in/pedro-goncalo-correia/"><i class="bi bi-linkedin"></i> Linkedin</a>
+            </li>
+        </ul>
+    </footer>
+</div>
+    </body>
+</html>

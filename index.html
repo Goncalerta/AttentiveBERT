@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+            name="description"
+            content="Visualizer of BERT's Attention Mechanism and analyser of adversarial attacks."
+        />
+        <meta
+            name="keywords"
+            content="BERT,Attention,Adversarial Attack,Shortcut Learning, DistilBERT,NLP"
+        />
+        <title>Attentive BERT</title>
+        <link
+            rel="icon"
+            type="image/png"
+            href="./resources/favicon.png"
+        />
+        <link
+            rel="stylesheet"
+            href="./resources/style.css"
+        />
+        <script
+            src="./resources/script.js"
+            defer
+        ></script>
+    </head>
+    <body>
+        <nav aria-label="Navbar" class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container-md">
+        <div class="navbar-leftmost">
+            <button
+                aria-controls="navbarContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+                class="navbar-toggler"
+                data-bs-target="#navbarContent"
+                data-bs-toggle="collapse"
+                type="button"
+            >
+                <span class="navbar-toggler-icon">
+                </span>
+            </button>
+            <a class="navbar-brand" href="./index.html">
+                <img src="./resources/img/logo.png"> Attentive<strong>BERT</strong>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Learn</a>
+                    <ul class="dropdown-menu navbar-dropdown-animation">
+                        <li><a class="dropdown-item" href="./learn/bert.html">BERT</a></li>
+                        <li><a class="dropdown-item" href="./learn/attention.html">Self-Attention mechanism</a></li>
+                        <li><a class="dropdown-item" href="./learn/nli.html">Natural Language Inference (NLI)</a></li>
+                        <li><a class="dropdown-item" href="./learn/ari.html">Argumentative Relation Identification (ARI)</a></li>
+                        <li><a class="dropdown-item" href="./learn/fv.html">Fact Verification (FV)</a></li>
+                        <li><a class="dropdown-item" href="./learn/shortcut_learning.html">Shortcut learning</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Visualize</a>
+                    <ul class="dropdown-menu navbar-dropdown-animation">
+                        <li><a class="dropdown-item" href="./visualize/attention_heatmaps.html">Attention weights (Single input)</a></li>
+                        <li><a class="dropdown-item" href="./visualize/compare_attention.html">Compare attention weights (Two inputs)</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./adversarial_attacks.html">
+                        Adversarial Attacks
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="./about.html">
+                        About
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/Goncalerta/AttentiveBERT">
+                        <i class="bi bi-github"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container my-4">
+        <main>
+            <div class="main-logo mt-5 mb-5">
+                <img src="./resources/img/logo.png"> <span>Attentive<strong>BERT</strong></span>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="container my-4">
+                        <h1>Learn</h1>
+                        <p class="text-justify mb-4">Find more about BERT, its attention mechanism, shortcut learning and adversarial attacks, as well as 3 classification tasks in natural language processing.</p>
+                        <a href="./learn/bert.html" class="btn btn-primary wide-form-item mx-3 justify-content-center" type="button">Learn BERT</a>
+                        <a href="./learn/attention.html" class="btn btn-primary wide-form-item mx-3 justify-content-center" type="button">Learn Self-Attention</a>
+                        <a href="./learn/nli.html" class="btn btn-primary wide-form-item mx-3 justify-content-center" type="button">Learn NLI</a>
+                        <a href="./learn/ari.html" class="btn btn-primary wide-form-item mx-3 justify-content-center" type="button">Learn ARI</a>
+                        <a href="./learn/fv.html" class="btn btn-primary wide-form-item mx-3 justify-content-center" type="button">Learn FV</a>
+                        <a href="./learn/shortcut_learning.html" class="btn btn-primary wide-form-item mx-3 justify-content-center" type="button">Learn Shortcut learning</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="container my-4">
+                        <h1>Visualize</h1>
+                        <p class="text-justify mb-4">Visualize the attention weights for every layer and head for a given input to the model.</p>
+                        <a href="./visualize/attention_heatmaps.html" class="btn btn-primary wide-form-item mx-3 justify-content-center" type="button">Visualize single input</a>
+                        <a href="./visualize/compare_attention.html" class="btn btn-primary wide-form-item mx-3 justify-content-center" type="button">Compare two inputs</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="container my-4">
+                        <h1>Adversarial Attacks</h1>
+                        <p class="text-justify mb-4">Generate adversarial attacks or browse a pregenerated list using different methods, so as to visualize the attention weights before and after the attack.</p>
+                        <a href="./adversarial_attacks.html" class="btn btn-primary wide-form-item mx-3 justify-content-center" type="button">Adversarial attacks</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+ <div class="container mt-4">
+    <hr>
+    <footer>
+        <p class="mb-0 copyright">Copyright &copy; Pedro Gonçalo Correia 2022</p>
+        <p class="mb-0 copyright">This website and its content is licensed under the <a href="https://github.com/Goncalerta/AttentiveBERT/blob/main/LICENSE">GNU GENERAL PUBLIC LICENSE v3</a>.</p>
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link ps-0" href="mailto: pedrogoncalocorreia@hotmail.com"><i class="bi bi-envelope"></i> pedrogoncalocorreia@hotmail.com</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link ps-0" href="https://github.com/Goncalerta"><i class="bi bi-github"></i> Github</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link ps-0" href="https://www.linkedin.com/in/pedro-goncalo-correia/"><i class="bi bi-linkedin"></i> Linkedin</a>
+            </li>
+        </ul>
+    </footer>
+</div>
+    </body>
+</html>
